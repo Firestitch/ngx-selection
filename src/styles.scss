@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+@mixin fs-bulk($theme) {
+
+  $primary: mat-palette($theme);
+  .fs-bulk-pane {
+    max-width: 100% !important;
+
+    .mat-dialog-container {
+      padding: 10px;
+    }
+
+    .mat-dialog-content {
+      flex-direction: row;
+      display: flex;
+      align-items: center;
+      margin: 0 -10px;
+      padding: 0 20px;
+      height: 50px;
+
+      .selected {
+        margin-right: 20px;
+      }
+    }
+
+    .actions {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .action {
+      margin-left: 15px;
+    }
+
+    .selected-badge {
+      margin-right: 3px;
+      background: mat-color($primary);
+      color: #fff;
+      display: inline-block;
+      width: 28px;
+      text-align: center;
+      border-radius: 50%;
+      line-height: 28px;
+    }
+  }
+}

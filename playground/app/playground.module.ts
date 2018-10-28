@@ -5,14 +5,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FsExampleModule } from '@firestitch/example';
+import { FsMessageModule } from '@firestitch/message';
+import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
 
-import { FsComponentModule } from 'fs-package';
+import { FsComponentModule } from 'fs-bulk';
 
 import { AppMaterialModule } from './material.module';
 import {
 ExampleComponent,
 ExamplesComponent } from './components';
 import { AppComponent } from './app.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 const routes: Routes = [
@@ -23,11 +26,14 @@ const routes: Routes = [
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsComponentModule,
+    FsComponentModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
     FsExampleModule,
+    ToastrModule.forRoot(),
+    FsMessageModule.forRoot(),
+    FsCheckboxGroupModule,
     RouterModule.forRoot(routes),
   ],
   entryComponents: [

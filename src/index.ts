@@ -3,3 +3,4 @@
  */
 
 export { FsComponentModule } from './app/fs-component.module';
+export * from './app/services';

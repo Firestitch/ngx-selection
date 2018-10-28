@@ -1,1 +1,7 @@
-@import '../tools/assets/playground.scss';
+@import '~@angular/material/theming';
+@import '~@firestitch/message/styles.scss';
+
+@import './../tools/assets/playground.scss';
+@import '../src/styles.scss';
+
+@include fs-bulk($mat-blue);
