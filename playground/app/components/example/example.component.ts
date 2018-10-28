@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FsComponentService } from 'fs-bulk';
+import { BulkDialog } from 'fs-bulk';
 import { FsMessage } from '@firestitch/message';
+import { BulkDialogConfig } from 'src/app/interfaces';
 
 @Component({
   selector: 'example',
@@ -17,12 +18,13 @@ export class ExampleComponent {
       { name: 'Item 4', id: 4 }
     ];
 
-  constructor(private fsComponentService: FsComponentService,
+  constructor(private bulkDialog: BulkDialog,
               private fsMessage: FsMessage) {}
 
   open() {
 
-    const config = {
+    const config: BulkDialogConfig = {
+      allCount: this.items.length,
       actions: [
         {
           tooltip: 'Delete',
@@ -31,11 +33,11 @@ export class ExampleComponent {
         },
         {
           icon: 'more_vert',
-          actions: [
+          options: [
             {
               name: 'Move to Section',
               value: 'move',
-              actions: [
+              options: [
                 {
                   name: 'Section A',
                   value: 'sectiona'
@@ -59,7 +61,7 @@ export class ExampleComponent {
       ]
     }
 
-    const bulkRef = this.fsComponentService.open(config, this.selected);
+    const bulkRef = this.bulkDialog.open(config, this.selected);
 
     bulkRef.onAction().subscribe((result) => {
       let message = 'Selected all';

@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsComponentComponent } from './components/fs-component/fs-component.component';
-import { FsComponentService } from './services';
+import { BulkDialogComponent } from './components';
+import { BulkDialog } from './services';
 import { FormsModule } from '@angular/forms';
 import {  MatDialogModule,
           MatButtonModule,
@@ -25,21 +25,18 @@ import {  MatDialogModule,
     MatCheckboxModule,
     MatTooltipModule
   ],
-  exports: [
-    FsComponentComponent,
-  ],
   entryComponents: [
-    FsComponentComponent
+    BulkDialogComponent
   ],
   declarations: [
-    FsComponentComponent,
+    BulkDialogComponent,
   ]
 })
-export class FsComponentModule {
+export class FsBulkModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsComponentModule,
-      providers: [FsComponentService]
+      ngModule: FsBulkModule,
+      providers: [BulkDialog]
     };
   }
 }

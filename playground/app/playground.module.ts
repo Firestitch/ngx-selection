@@ -8,7 +8,7 @@ import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
 
-import { FsComponentModule } from 'fs-bulk';
+import { FsBulkModule } from 'fs-bulk';
 
 import { AppMaterialModule } from './material.module';
 import {
@@ -26,7 +26,7 @@ const routes: Routes = [
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsComponentModule.forRoot(),
+    FsBulkModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,

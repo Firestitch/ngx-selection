@@ -1,19 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { BulkRef } from './../../models';
+import { BulkRef } from '../../models';
 
 @Component({
-  selector: 'fs-component',
-  templateUrl: 'fs-component.component.html',
-  styleUrls: [ 'fs-component.component.scss' ],
+  templateUrl: 'bulk-dialog.component.html'
 })
-export class FsComponentComponent {
+export class BulkDialogComponent {
 
   public allSelected = false;
   private bulkRef: BulkRef;
 
   constructor(
-    public dialogRef: MatDialogRef<FsComponentComponent>,
+    public dialogRef: MatDialogRef<BulkDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
       this.bulkRef = this.data.bulkRef;
     }

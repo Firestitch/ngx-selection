@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FsComponentComponent } from './../components';
+import { BulkDialogComponent } from '../components';
 import { BulkRef } from '../models';
 
 @Injectable()
-export class FsComponentService {
+export class BulkDialog {
 
   private isOpen = false;
 
@@ -20,7 +20,7 @@ export class FsComponentService {
 
     const bulkRef = new BulkRef();
 
-    const dialogRef = this.dialog.open(FsComponentComponent, {
+    const dialogRef = this.dialog.open(BulkDialogComponent, {
       width: '100%',
       panelClass: 'fs-bulk-pane',
       hasBackdrop: false,
@@ -29,6 +29,10 @@ export class FsComponentService {
     });
 
     bulkRef.dialogRef = dialogRef;
+
+    dialogRef.beforeClose().subscribe(result => {
+      bulkRef.cancel();
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       this.isOpen = false;

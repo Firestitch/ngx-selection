@@ -5,6 +5,11 @@
 
   $primary: mat-palette($theme);
   .fs-bulk-pane {
+
+    .col1, .col2, .col3 {
+      width: 33%;
+    }
+
     max-width: 100% !important;
 
     .mat-dialog-container {
@@ -25,9 +30,12 @@
     }
 
     .actions {
-      flex: 1;
       display: flex;
-      justify-content: flex-end;
+    }
+
+    .col2 {
+      display: flex;
+      justify-content: center;
     }
 
     .action {
@@ -43,6 +51,19 @@
       text-align: center;
       border-radius: 50%;
       line-height: 28px;
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    .fs-bulk-pane {
+      .col1, .col2, .col3 {
+        width: auto;
+      }
+
+      .col2 {
+        justify-content: flex-end;
+        flex: 1;
+      }
     }
   }
 }

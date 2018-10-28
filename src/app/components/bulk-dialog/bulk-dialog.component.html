@@ -1,0 +1,50 @@
+<div mat-dialog-content>
+
+  <div class="col1">
+    <span class="selected">
+      <span *ngIf="allSelected; else elseSelected">
+        <span class="selected-badge">All</span> Selected
+      </span>
+      <ng-template #elseSelected>
+        <span class="selected-badge">{{data.data.length}}</span> Selected
+      </ng-template>
+    </span>
+
+    <mat-checkbox [(ngModel)]="allSelected" (ngModelChange)="selectAllClick()">Select All {{data.config.allCount}}</mat-checkbox>
+
+    <button mat-icon-button (click)="cancelClick()" class="action" matTooltip="Cancel">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <div class="col2">
+    <div class="actions">
+      <ng-container *ngFor="let action of data.config.actions">
+        <div class="action" *ngIf="!action.options; else elseMenu">
+          <button mat-icon-button (click)="actionClick(action)" [matTooltip]="action.tooltip">
+            <mat-icon>{{action.icon}}</mat-icon>
+          </button>
+        </div>
+        <ng-template #elseMenu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu" [matTooltip]="action.tooltip">
+            <mat-icon>{{action.icon}}</mat-icon>
+          </button>
+
+          <mat-menu #appMenu="matMenu">
+            <ng-container *ngFor="let option of action.options">
+              <button mat-menu-item [matMenuTriggerFor]="appSubMenu" *ngIf="option.options; else elseSubMenu">{{ option.name }}</button>
+              <mat-menu #appSubMenu="matMenu">
+                  <button *ngFor="let action of option.options" mat-menu-item (click)="actionClick(option)">{{ option.name }}</button>
+              </mat-menu>
+              <ng-template #elseSubMenu>
+                  <button mat-menu-item (click)="actionClick(option)">{{ option.name }}</button>
+              </ng-template>
+            </ng-container>
+          </mat-menu>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="col3"></div>
+</div>

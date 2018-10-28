@@ -33,4 +33,8 @@ export class BulkRef {
     this.dialogRef.close();
     return this.cancelSubject.next();
   }
+
+  close() {
+    this.dialogRef.close();
+  }
 }

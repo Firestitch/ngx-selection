@@ -1,7 +1,3 @@
 <fs-checkbox-group [(ngModel)]="selected" name="selected" label="Checkboxes">
-    <mat-checkbox *ngFor="let item of items" [value]="item">{{ item.name }}</mat-checkbox>
+    <mat-checkbox (click)="open()" *ngFor="let item of items" [value]="item">{{ item.name }}</mat-checkbox>
 </fs-checkbox-group>
-
-<p>
-  <button mat-raised-button (click)="open()">Open</button>
-</p>
