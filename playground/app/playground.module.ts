@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
-import { FsIFrameModule, FsIFrame } from '@firestitch/iframe';
 
 import { FsBulkModule } from 'fs-bulk';
 
@@ -31,8 +30,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
-    FsIFrameModule,
-    FsExampleModule,
+    FsExampleModule.forRoot(),
     ToastrModule.forRoot(),
     FsMessageModule.forRoot(),
     FsCheckboxGroupModule,
@@ -49,7 +47,4 @@ const routes: Routes = [
   ],
 })
 export class PlaygroundModule {
-  constructor(private fsIFrame: FsIFrame) {
-    this.fsIFrame.observeBody();
-  }
 }

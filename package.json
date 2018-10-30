@@ -1,10 +1,10 @@
 {
-  "name": "@firestitch/package",
-  "description": "@firestitch/package",
+  "name": "@firestitch/bulk",
+  "description": "@firestitch/bulk",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Firestitch/fs-bulk"
+    "url": "https://github.com/Firestitch/ngx-bulk"
   },
   "author": {
     "name": "Firestitch",
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Firestitch/fs-bulk/issues"
+    "url": "https://github.com/Firestitch/ngx-bulk/issues"
   },
   "main": "package/index.js",
   "typings": "package/index.d.ts",
@@ -45,11 +45,10 @@
     "@angular/platform-browser-dynamic": "^6.1.9",
     "@angular/router": "^6.1.9",
     "@compodoc/compodoc": "^1.0.5",
-    "@firestitch/example": "^0.2.20",
+    "@firestitch/example": "^0.3.1",
     "@firestitch/message": "^0.1.22",
     "@firestitch/checkboxgroup": "^0.1.20",
     "@firestitch/common": "^0.3.1",
-    "@firestitch/iframe": "^0.1.8",
     "ngx-toastr": "^8.0.0",
     "@types/googlemaps": "^3.30.2",
     "@types/jasmine": "~2.8.8",

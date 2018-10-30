@@ -10,6 +10,7 @@ import { BulkDialogConfig } from 'src/app/interfaces';
 export class ExampleComponent {
 
   selected: object[] = [];
+  bulkRef = null;
 
   items = [
       { name: 'Item 1', id: 1 },
@@ -22,6 +23,10 @@ export class ExampleComponent {
               private fsMessage: FsMessage) {}
 
   open() {
+
+    if (this.bulkRef) {
+      return;
+    }
 
     const config: BulkDialogConfig = {
       allCount: this.items.length,
@@ -61,9 +66,9 @@ export class ExampleComponent {
       ]
     }
 
-    const bulkRef = this.bulkDialog.open(config, this.selected);
+    this.bulkRef = this.bulkDialog.open(config, this.selected);
 
-    bulkRef.onAction().subscribe((result) => {
+    this.bulkRef.onAction().subscribe((result) => {
       let message = 'Selected all';
 
       const data = <any>result;
@@ -73,10 +78,10 @@ export class ExampleComponent {
 
       message = message.concat(' for bulk processing ').concat(data.name || data.tooltip).concat(' (').concat(data.value).concat(')');
       this.fsMessage.success(message);
-      bulkRef.cancel();
+      this.bulkRef.cancel();
     });
 
-    bulkRef.onSelectAll().subscribe((all) => {
+    this.bulkRef.onSelectAll().subscribe((all) => {
       this.selected.splice(0, this.selected.length);
       if (all) {
         this.selected.push(...this.items);
@@ -85,8 +90,9 @@ export class ExampleComponent {
       }
     });
 
-    bulkRef.onCancel().subscribe(() => {
+    this.bulkRef.onCancel().subscribe(() => {
       this.selected.splice(0, this.selected.length);
+      this.bulkRef = null;
     });
   }
 }
