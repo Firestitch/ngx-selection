@@ -49,6 +49,7 @@
     "@firestitch/message": "^0.1.22",
     "@firestitch/checkboxgroup": "^0.1.20",
     "@firestitch/common": "^0.3.1",
+    "@firestitch/iframe": "^0.1.8",
     "ngx-toastr": "^8.0.0",
     "@types/googlemaps": "^3.30.2",
     "@types/jasmine": "~2.8.8",
