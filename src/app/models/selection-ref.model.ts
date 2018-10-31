@@ -1,6 +1,6 @@
 import { Subject } from "rxjs";
 
-export class BulkRef {
+export class SelectionRef {
 
   private actionSubject = new Subject();
   private selectAllSubject = new Subject();

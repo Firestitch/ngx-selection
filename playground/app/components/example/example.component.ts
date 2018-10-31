@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BulkDialog } from 'fs-bulk';
+import { SelectionDialog } from 'fs-selection';
 import { FsMessage } from '@firestitch/message';
-import { BulkDialogConfig } from 'src/app/interfaces';
+import { SelectionDialogConfig } from 'src/app/interfaces';
 
 @Component({
   selector: 'example',
@@ -10,7 +10,7 @@ import { BulkDialogConfig } from 'src/app/interfaces';
 export class ExampleComponent {
 
   selected: object[] = [];
-  bulkRef = null;
+  selectionRef = null;
 
   items = [
       { name: 'Item 1', id: 1 },
@@ -19,16 +19,16 @@ export class ExampleComponent {
       { name: 'Item 4', id: 4 }
     ];
 
-  constructor(private bulkDialog: BulkDialog,
+  constructor(private selectionDialog: SelectionDialog,
               private fsMessage: FsMessage) {}
 
   open() {
 
-    if (this.bulkRef) {
+    if (this.selectionRef) {
       return;
     }
 
-    const config: BulkDialogConfig = {
+    const config: SelectionDialogConfig = {
       allCount: this.items.length,
       actions: [
         {
@@ -66,9 +66,9 @@ export class ExampleComponent {
       ]
     }
 
-    this.bulkRef = this.bulkDialog.open(config, this.selected);
+    this.selectionRef = this.selectionDialog.open(config, this.selected);
 
-    this.bulkRef.onAction().subscribe((result) => {
+    this.selectionRef.onAction().subscribe((result) => {
       let message = 'Selected all';
 
       const data = <any>result;
@@ -76,12 +76,12 @@ export class ExampleComponent {
         message = 'Selected '.concat(this.selected.length.toString());
       }
 
-      message = message.concat(' for bulk processing ').concat(data.name || data.tooltip).concat(' (').concat(data.value).concat(')');
+      message = message.concat(' for selection processing ').concat(data.name || data.tooltip).concat(' (').concat(data.value).concat(')');
       this.fsMessage.success(message);
-      this.bulkRef.cancel();
+      this.selectionRef.cancel();
     });
 
-    this.bulkRef.onSelectAll().subscribe((all) => {
+    this.selectionRef.onSelectAll().subscribe((all) => {
       this.selected.splice(0, this.selected.length);
       if (all) {
         this.selected.push(...this.items);
@@ -90,9 +90,9 @@ export class ExampleComponent {
       }
     });
 
-    this.bulkRef.onCancel().subscribe(() => {
+    this.selectionRef.onCancel().subscribe(() => {
       this.selected.splice(0, this.selected.length);
-      this.bulkRef = null;
+      this.selectionRef = null;
     });
   }
 }

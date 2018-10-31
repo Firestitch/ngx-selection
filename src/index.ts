@@ -2,5 +2,5 @@
  * Public API Surface of fs-menu
  */
 
-export { FsBulkModule } from './app/fs-bulk.module';
+export { FsSelectionModule } from './app/fs-selection.module';
 export * from './app/services';

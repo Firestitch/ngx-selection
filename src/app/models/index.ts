@@ -1,1 +1,1 @@
-export * from './bulk-ref.model';
+export * from './selection-ref.model';

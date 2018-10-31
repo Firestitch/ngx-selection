@@ -1,1 +1,1 @@
-export * from './bulk-dialog-config.interface';
+export * from './selection-dialog-config.interface';

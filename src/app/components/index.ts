@@ -1,1 +1,1 @@
-export * from './bulk-dialog';
+export * from './selection-dialog';

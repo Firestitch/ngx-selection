@@ -1,10 +1,10 @@
 {
-  "name": "@firestitch/bulk",
-  "description": "@firestitch/bulk",
+  "name": "@firestitch/selection",
+  "description": "@firestitch/selection",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Firestitch/ngx-bulk"
+    "url": "https://github.com/Firestitch/ngx-selection"
   },
   "author": {
     "name": "Firestitch",
@@ -15,13 +15,13 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Firestitch/ngx-bulk/issues"
+    "url": "https://github.com/Firestitch/ngx-selection/issues"
   },
   "main": "package/index.js",
   "typings": "package/index.d.ts",
   "scripts": {
-    "package": "ng build fs-bulk",
-    "package:test": "ng test fs-bulk",
+    "package": "ng build fs-selection",
+    "package:test": "ng test fs-selection",
     "package:publish": "cd package && npm publish --access=public",
     "demo:build": "ng build --aot --prod",
     "serve": "ng serve"
