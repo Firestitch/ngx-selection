@@ -22,7 +22,7 @@ export class ExampleComponent {
   constructor(private selectionDialog: SelectionDialog,
               private fsMessage: FsMessage) {}
 
-  open() {
+  public open() {
 
     if (this.selectionRef) {
       return;
@@ -30,6 +30,7 @@ export class ExampleComponent {
 
     const config: SelectionDialogConfig = {
       allCount: this.items.length,
+      selectedCount: this.selected.length,
       actions: [
         {
           tooltip: 'Delete',
@@ -64,19 +65,29 @@ export class ExampleComponent {
           ]
         }
       ]
+    };
+
+    this.selectionRef = this.selectionDialog.open(config);
+    this.subscribeToSelectionEvents();
+  }
+
+  public selectionChange() {
+    if (this.selectionRef) {
+      this.selectionRef.updateSelected(this.selected.length);
     }
+  }
 
-    this.selectionRef = this.selectionDialog.open(config, this.selected);
-
+  private subscribeToSelectionEvents() {
     this.selectionRef.onAction().subscribe((result) => {
       let message = 'Selected all';
 
       const data = <any>result;
       if (!data.all) {
-        message = 'Selected '.concat(this.selected.length.toString());
+        message = `Selected ${this.selected.length}`;
       }
 
-      message = message.concat(' for selection processing ').concat(data.name || data.tooltip).concat(' (').concat(data.value).concat(')');
+      message = `${message} for selection processing ${(data.name || data.tooltip)} (${data.value})`;
+
       this.fsMessage.success(message);
       this.selectionRef.cancel();
     });

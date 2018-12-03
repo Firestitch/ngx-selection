@@ -6,11 +6,13 @@
         <span class="selected-badge">All</span> Selected
       </span>
       <ng-template #elseSelected>
-        <span class="selected-badge">{{data.data.length}}</span> Selected
+        <span class="selected-badge">{{ selectedCount }}</span> Selected
       </ng-template>
     </span>
 
-    <mat-checkbox [(ngModel)]="allSelected" (ngModelChange)="selectAllClick()">Select All {{data.config.allCount}}</mat-checkbox>
+    <mat-checkbox [(ngModel)]="allSelected" (ngModelChange)="selectAllClick()">
+      Select All {{ data.config.allCount }}
+    </mat-checkbox>
 
     <button mat-icon-button (click)="cancelClick()" class="action" matTooltip="Cancel">
       <mat-icon>clear</mat-icon>
@@ -22,22 +24,26 @@
       <ng-container *ngFor="let action of data.config.actions">
         <div class="action" *ngIf="!action.options; else elseMenu">
           <button mat-icon-button (click)="actionClick(action)" [matTooltip]="action.tooltip">
-            <mat-icon>{{action.icon}}</mat-icon>
+            <mat-icon>{{ action.icon }}</mat-icon>
           </button>
         </div>
         <ng-template #elseMenu>
           <button mat-icon-button [matMenuTriggerFor]="appMenu" [matTooltip]="action.tooltip">
-            <mat-icon>{{action.icon}}</mat-icon>
+            <mat-icon>{{ action.icon }}</mat-icon>
           </button>
 
           <mat-menu #appMenu="matMenu">
             <ng-container *ngFor="let option of action.options">
-              <button mat-menu-item [matMenuTriggerFor]="appSubMenu" *ngIf="option.options; else elseSubMenu">{{ option.name }}</button>
+              <button mat-menu-item [matMenuTriggerFor]="appSubMenu"
+                      *ngIf="option.options; else elseSubMenu">{{ option.name }}
+              </button>
               <mat-menu #appSubMenu="matMenu">
-                  <button *ngFor="let action of option.options" mat-menu-item (click)="actionClick(option)">{{ option.name }}</button>
+                <button *ngFor="let subOption of option.options" mat-menu-item
+                        (click)="actionClick(subOption)">{{ subOption.name }}
+                </button>
               </mat-menu>
               <ng-template #elseSubMenu>
-                  <button mat-menu-item (click)="actionClick(option)">{{ option.name }}</button>
+                <button mat-menu-item (click)="actionClick(option)">{{ option.name }}</button>
               </ng-template>
             </ng-container>
           </mat-menu>

@@ -11,7 +11,7 @@ export class SelectionDialog {
 
   constructor(public dialog: MatDialog) {}
 
-  public open(config, data) {
+  public open(config) {
 
     if (this.selectionRef) {
       return this.selectionRef;
@@ -24,7 +24,7 @@ export class SelectionDialog {
       panelClass: 'fs-selection-pane',
       hasBackdrop: false,
       position: { left: '0px', bottom: '0px', right: '0px' },
-      data: { data: data, selectionRef: this.selectionRef, config: config }
+      data: { selectionRef: this.selectionRef, config: config }
     });
 
     this.selectionRef.dialogRef = dialogRef;

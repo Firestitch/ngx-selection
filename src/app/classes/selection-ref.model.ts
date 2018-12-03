@@ -1,9 +1,11 @@
 import { Subject } from 'rxjs';
+import { MatDialogRef } from '@angular/material';
+import { SelectionDialogComponent } from '../components/selection-dialog';
 
 
 export class SelectionRef {
 
-  public dialogRef;
+  public dialogRef: MatDialogRef<SelectionDialogComponent>;
 
   private actionSubject = new Subject();
   private selectAllSubject = new Subject();
@@ -33,10 +35,19 @@ export class SelectionRef {
 
   public cancel() {
     this.dialogRef.close();
+
     return this.cancelSubject.next();
   }
 
   public close() {
     this.dialogRef.close();
+  }
+
+  public updateSelected(selectedCount: number): void {
+    this.dialogRef.componentInstance.updateSelected(selectedCount);
+  }
+
+  public updateAllCount(allCount: number): void {
+    this.dialogRef.componentInstance.updateAllCount(allCount);
   }
 }
