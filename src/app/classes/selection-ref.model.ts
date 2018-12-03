@@ -1,40 +1,42 @@
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs';
+
 
 export class SelectionRef {
+
+  public dialogRef;
 
   private actionSubject = new Subject();
   private selectAllSubject = new Subject();
   private cancelSubject = new Subject();
-  public dialogRef;
 
   constructor() {}
 
-  onSelectAll() {
+  public onSelectAll() {
     return this.selectAllSubject;
   }
 
-  onAction() {
+  public onAction() {
     return this.actionSubject;
   }
 
-  onCancel() {
+  public onCancel() {
     return this.cancelSubject;
   }
 
-  action(data) {
+  public action(data) {
     return this.actionSubject.next(data);
   }
 
-  selectAll(data) {
+  public selectAll(data) {
     return this.selectAllSubject.next(data);
   }
 
-  cancel() {
+  public cancel() {
     this.dialogRef.close();
     return this.cancelSubject.next();
   }
 
-  close() {
+  public close() {
     this.dialogRef.close();
   }
 }

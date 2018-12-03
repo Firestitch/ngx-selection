@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SelectionDialogComponent } from '../components';
-import { SelectionRef } from '../models';
+import { SelectionRef } from '../classes';
+
 
 @Injectable()
 export class SelectionDialog {

@@ -1,13 +1,13 @@
 export interface SelectionDialogConfig {
   allCount?: number,
-  actions?: Array<SelectionDialogConfigAction>
+  actions?: SelectionDialogConfigAction[]
 }
 
 export interface SelectionDialogConfigAction {
   tooltip?: string,
   value?: string,
   icon?: string,
-  options?: Array<SelectionDialogConfigActionOption | SelectionDialogConfigActionOptionMenu>
+  options?: SelectionDialogConfigActionOption[] | SelectionDialogConfigActionOptionMenu[]
 }
 
 export interface SelectionDialogConfigActionOption {
