@@ -18,8 +18,8 @@
       "dom"
     ],
     "paths": {
-      "fs-selection": [
-        "src/index.ts"
+      "@firestitch/selection": [
+        "src/public_api.ts"
       ]
     }
   }

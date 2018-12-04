@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { SelectionDialog } from 'fs-selection';
 import { FsMessage } from '@firestitch/message';
+import { SelectionDialog } from '@firestitch/selection';
+
 import { SelectionDialogConfig } from 'src/app/interfaces';
+
 
 @Component({
   selector: 'example',

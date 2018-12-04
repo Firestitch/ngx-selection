@@ -8,7 +8,7 @@ import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
 
-import { FsSelectionModule } from 'fs-selection';
+import { FsSelectionModule } from '@firestitch/selection';
 
 import { AppMaterialModule } from './material.module';
 import {
