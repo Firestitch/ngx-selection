@@ -11,7 +11,7 @@ export class SelectionDialog {
 
   constructor(public dialog: MatDialog) {}
 
-  public open(config) {
+  public open(config): SelectionRef {
 
     if (this.selectionRef) {
       return this.selectionRef;
@@ -34,6 +34,7 @@ export class SelectionDialog {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.selectionRef.destroy();
       this.selectionRef = null;
     });
 

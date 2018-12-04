@@ -11,7 +11,7 @@
     </span>
 
     <mat-checkbox [(ngModel)]="allSelected" (ngModelChange)="selectAllClick()">
-      Select All {{ data.config.allCount }}
+      Select All {{ allCount }}
     </mat-checkbox>
 
     <button mat-icon-button (click)="cancelClick()" class="action" matTooltip="Cancel">

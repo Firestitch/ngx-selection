@@ -1,53 +1,113 @@
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
+import { takeUntil } from 'rxjs/operators';
+
 import { SelectionDialogComponent } from '../components/selection-dialog';
+import { SelectionDialogActionCallbackParams } from '../interfaces';
 
 
 export class SelectionRef {
 
   public dialogRef: MatDialogRef<SelectionDialogComponent>;
 
-  private actionSubject = new Subject();
-  private selectAllSubject = new Subject();
-  private cancelSubject = new Subject();
+  private actionSubject = new Subject<SelectionDialogActionCallbackParams>();
+  private selectAllSubject = new Subject<boolean>();
+  private cancelSubject = new Subject<void>();
+
+  private _destroy = new Subject<void>();
 
   constructor() {}
 
-  public onSelectAll() {
-    return this.selectAllSubject;
-  }
-
+  /**
+   * Subscribe when action selected
+   */
   public onAction() {
-    return this.actionSubject;
+    return this.actionSubject.pipe(takeUntil(this._destroy));
   }
 
-  public onCancel() {
-    return this.cancelSubject;
+  /**
+   * Subscribe when "Select All" is selected
+   */
+  public onSelectAll(): Observable<boolean> {
+    return this.selectAllSubject.pipe(takeUntil(this._destroy));
   }
 
-  public action(data) {
+  /**
+   * Subscribe when dialog ref was closed
+   */
+  public onCancel(): Observable<void> {
+    return this.cancelSubject.pipe(takeUntil(this._destroy));
+  }
+
+  /**
+   * Share event when action was clicked
+   * @param data
+   */
+  public action(data: SelectionDialogActionCallbackParams) {
     return this.actionSubject.next(data);
   }
 
-  public selectAll(data) {
+  /**
+   * Share event when "Select All" was clicked
+   * @param data
+   */
+  public selectAll(data: boolean) {
     return this.selectAllSubject.next(data);
   }
 
+  /**
+   * Share event when dialog ref was canceled
+   */
   public cancel() {
-    this.dialogRef.close();
+    this.close();
 
     return this.cancelSubject.next();
   }
 
+
+  /**
+   * Close dialog ref
+   */
   public close() {
     this.dialogRef.close();
   }
 
+  /**
+   * Update count of selected (counter)
+   * @param selectedCount
+   */
   public updateSelected(selectedCount: number): void {
-    this.dialogRef.componentInstance.updateSelected(selectedCount);
+    if (this.dialogRef && this.dialogRef.componentInstance) {
+      this.dialogRef.componentInstance.updateSelected(selectedCount);
+    }
   }
 
+  /**
+   * Update total count for select
+   * @param allCount
+   */
   public updateAllCount(allCount: number): void {
-    this.dialogRef.componentInstance.updateAllCount(allCount);
+    if (this.dialogRef && this.dialogRef.componentInstance) {
+      this.dialogRef.componentInstance.updateAllCount(allCount);
+    }
+  }
+
+  /**
+   * Update if all checkboxes was selected or not
+   * @param status
+   */
+  public updateSelectedAllStatus(status: boolean) {
+    this.dialogRef.componentInstance.allSelected = status;
+  }
+
+  /**
+   * Destroy ref
+   */
+  public destroy() {
+    this._destroy.next();
+    this._destroy.complete();
+    this.actionSubject.complete();
+    this.selectAllSubject.complete();
+    this.cancelSubject.complete();
   }
 }

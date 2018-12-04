@@ -2,6 +2,6 @@
 @import '~@firestitch/message/styles.scss';
 
 @import './../tools/assets/playground.scss';
-@import '../src/styles.scss';
+@import '../src/app/styles.scss';
 
 @include fs-selection($mat-blue);

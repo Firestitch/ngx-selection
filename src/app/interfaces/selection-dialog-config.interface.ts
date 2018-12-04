@@ -8,7 +8,7 @@ export interface SelectionDialogConfigAction {
   tooltip?: string;
   value?: string;
   icon?: string;
-  options?: Array<SelectionDialogConfigActionOption | SelectionDialogConfigActionOptionMenu>;
+  options?: (SelectionDialogConfigActionOption | SelectionDialogConfigActionOptionMenu)[];
 }
 
 export interface SelectionDialogConfigActionOption {
@@ -19,4 +19,10 @@ export interface SelectionDialogConfigActionOption {
 export interface SelectionDialogConfigActionOptionMenu {
   name: string;
   options: SelectionDialogConfigActionOption[];
+}
+
+export interface SelectionDialogActionCallbackParams {
+  name: string;
+  value: any;
+  all: boolean;
 }
