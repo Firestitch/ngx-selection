@@ -11,8 +11,8 @@ import {
   MatTooltipModule
 } from '@angular/material';
 
-import { SelectionDialogComponent } from './components';
-import { SelectionDialog } from './services';
+import { SelectionDialogComponent } from './components/selection-dialog/selection-dialog.component';
+import { SelectionDialog } from './services/selection-dialog.service';
 
 
 @NgModule({

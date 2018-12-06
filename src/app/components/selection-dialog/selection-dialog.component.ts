@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { SelectionRef } from '../../classes';
+import { SelectionRef } from '../../classes/selection-ref.model';
 
 
 @Component({

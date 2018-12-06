@@ -2,8 +2,8 @@ import { Observable, Subject } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 
-import { SelectionDialogComponent } from '../components/selection-dialog';
-import { SelectionDialogActionCallbackParams } from '../interfaces';
+import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
+import { SelectionDialogActionCallbackParams } from '../interfaces/selection-dialog-config.interface';
 
 
 export class SelectionRef {
