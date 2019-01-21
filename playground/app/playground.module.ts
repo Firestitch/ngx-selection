@@ -7,15 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
-
 import { FsSelectionModule } from '@firestitch/selection';
+
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppMaterialModule } from './material.module';
 import {
 ExampleComponent,
 ExamplesComponent } from './components';
 import { AppComponent } from './app.component';
-import { ToastrModule } from 'ngx-toastr';
 
 
 const routes: Routes = [
