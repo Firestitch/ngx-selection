@@ -1,5 +1,6 @@
 {
   "name": "@firestitch/selection",
+  "title": "Selection",
   "description": "@firestitch/selection",
   "version": "0.2.0",
   "repository": {
@@ -46,8 +47,7 @@
     "@compodoc/compodoc": "^1.1.7",
     "@firestitch/checkboxgroup": "^0.2.0",
     "@firestitch/common": "^0.5.1",
-    "@firestitch/example": "^0.5.2",
-    "@firestitch/iframe": "^0.2.0",
+    "@firestitch/example": "^0.6.0",
     "@firestitch/message": "^0.2.0",
     "codelyzer": "^4.5.0",
     "cpx": "^1.5.0",
