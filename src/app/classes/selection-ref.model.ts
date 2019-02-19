@@ -21,21 +21,21 @@ export class SelectionRef {
   /**
    * Subscribe when action selected
    */
-  public onAction() {
+  public actionSelected$() {
     return this.actionSubject.pipe(takeUntil(this._destroy));
   }
 
   /**
    * Subscribe when "Select All" is selected
    */
-  public onSelectAll(): Observable<boolean> {
+  public allSelected$(): Observable<boolean> {
     return this.selectAllSubject.pipe(takeUntil(this._destroy));
   }
 
   /**
    * Subscribe when dialog ref was closed
    */
-  public onCancel(): Observable<void> {
+  public cancelled$(): Observable<void> {
     return this.cancelSubject.pipe(takeUntil(this._destroy));
   }
 

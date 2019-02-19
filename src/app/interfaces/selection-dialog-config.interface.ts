@@ -1,3 +1,5 @@
+import { SelectionActionType } from '../classes/selection-action-type.enum';
+
 export interface SelectionDialogConfig {
   allCount?: number;
   selectedCount?: number;
@@ -7,7 +9,8 @@ export interface SelectionDialogConfig {
 export interface SelectionDialogConfigAction {
   tooltip?: string;
   value?: string;
-  icon?: string;
+  label?: string;
+  type?: SelectionActionType,
   options?: (SelectionDialogConfigActionOption | SelectionDialogConfigActionOptionMenu)[];
 }
 
@@ -22,7 +25,7 @@ export interface SelectionDialogConfigActionOptionMenu {
 }
 
 export interface SelectionDialogActionCallbackParams {
-  name: string;
+  label: string;
   value: any;
   all: boolean;
 }

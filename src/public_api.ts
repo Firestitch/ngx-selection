@@ -13,3 +13,5 @@ export {
   SelectionDialogConfigActionOptionMenu,
   SelectionDialogActionCallbackParams,
 } from './app/interfaces/selection-dialog-config.interface';
+
+export  { SelectionActionType } from './app/classes/selection-action-type.enum';

@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '~@firestitch/selectbutton/styles.scss';
 
 @mixin fs-selection($theme) {
 
@@ -7,6 +8,7 @@
 
     .col1, .col2, .col3 {
       width: 33%;
+      display: flex;
     }
 
     max-width: 100% !important;
@@ -24,7 +26,15 @@
       height: 50px;
 
       .selected {
-        margin-right: 20px;
+        //margin-right: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .select-all-link {
+          cursor: pointer;
+        }
       }
     }
 
@@ -56,7 +66,7 @@
   @media only screen and (max-width: 900px) {
     .fs-selection-pane {
       .col1, .col2, .col3 {
-        width: auto;
+        width: 100%;
       }
 
       .col2 {

@@ -11,7 +11,9 @@ import {
   MatTooltipModule
 } from '@angular/material';
 
-import { SelectionDialogComponent } from './components/selection-dialog/selection-dialog.component';
+import { FsSelectButtonModule } from '@firestitch/selectbutton';
+
+import { OptionsDialogComponent, SelectionDialogComponent } from './components/';
 import { SelectionDialog } from './services/selection-dialog.service';
 
 
@@ -20,6 +22,7 @@ import { SelectionDialog } from './services/selection-dialog.service';
     // ng
     CommonModule,
     FormsModule,
+    FsSelectButtonModule,
 
     // material
     MatDialogModule,
@@ -32,9 +35,11 @@ import { SelectionDialog } from './services/selection-dialog.service';
   ],
   entryComponents: [
     SelectionDialogComponent,
+    OptionsDialogComponent,
   ],
   declarations: [
     SelectionDialogComponent,
+    OptionsDialogComponent,
   ]
 })
 export class FsSelectionModule {

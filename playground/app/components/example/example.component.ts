@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
 import { SelectionDialog } from '@firestitch/selection';
-import { SelectionDialogConfig } from '@firestitch/selection';
+import { SelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
 
 
 @Component({
@@ -34,37 +34,24 @@ export class ExampleComponent {
       selectedCount: this.selected.length,
       actions: [
         {
-          tooltip: 'Delete',
+          type: SelectionActionType.Action,
           value: 'delete',
-          icon: 'delete'
+          label: 'Delete'
         },
         {
-          icon: 'more_vert',
+          type: SelectionActionType.Select,
+          label: 'Change Status To',
           options: [
             {
-              name: 'Move to Section',
-              value: 'move',
-              options: [
-                {
-                  name: 'Section A',
-                  value: 'sectiona'
-                },
-                {
-                  name: 'Section B',
-                  value: 'sectionb'
-                },
-                {
-                  name: 'Section C',
-                  value: 'sectionc'
-                }
-              ]
+              name: 'TODO',
+              value: '1'
             },
             {
-              name: 'Archive',
-              value: 'archive',
+              name: 'Done',
+              value: '2'
             }
           ]
-        }
+        },
       ]
     };
 
@@ -79,7 +66,7 @@ export class ExampleComponent {
   }
 
   private subscribeToSelectionEvents() {
-    this.selectionRef.onAction().subscribe((result) => {
+    this.selectionRef.actionSelected$().subscribe((result) => {
       let message = 'Selected all';
 
       const data = <any>result;
@@ -87,13 +74,13 @@ export class ExampleComponent {
         message = `Selected ${this.selected.length}`;
       }
 
-      message = `${message} for selection processing ${(data.name || data.tooltip)} (${data.value})`;
+      message = `${message} for selection processing ${(data.label)} (${data.value})`;
 
       this.fsMessage.success(message);
       this.selectionRef.cancel();
     });
 
-    this.selectionRef.onSelectAll().subscribe((all) => {
+    this.selectionRef.allSelected$().subscribe((all) => {
       this.selected.splice(0, this.selected.length);
       if (all) {
         this.selected.push(...this.items);
@@ -102,7 +89,7 @@ export class ExampleComponent {
       }
     });
 
-    this.selectionRef.onCancel().subscribe(() => {
+    this.selectionRef.cancelled$().subscribe(() => {
       this.selected.splice(0, this.selected.length);
       this.selectionRef = null;
     });

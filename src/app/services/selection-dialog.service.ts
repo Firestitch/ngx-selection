@@ -29,7 +29,7 @@ export class SelectionDialog {
 
     this.selectionRef.dialogRef = dialogRef;
 
-    dialogRef.beforeClose().subscribe(result => {
+    dialogRef.beforeClosed().subscribe(result => {
       this.selectionRef.cancel();
     });
 
