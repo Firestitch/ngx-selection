@@ -13,7 +13,8 @@ import {
 
 import { FsSelectButtonModule } from '@firestitch/selectbutton';
 
-import { OptionsDialogComponent, SelectionDialogComponent } from './components/';
+import { OptionsDialogComponent } from './components/options-dialog/options-dialog.component';
+import { SelectionDialogComponent } from './components/selection-dialog/selection-dialog.component';
 import { SelectionDialog } from './services/selection-dialog.service';
 
 
