@@ -2,7 +2,7 @@
   "name": "@firestitch/selection",
   "title": "Selection",
   "description": "@firestitch/selection",
-  "version": "0.2.3",
+  "version": "7.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-selection"
@@ -47,7 +47,7 @@
     "@compodoc/compodoc": "^1.1.7",
     "@firestitch/checkboxgroup": "^0.2.0",
     "@firestitch/common": "^0.5.1",
-    "@firestitch/example": "^0.6.0",
+    "@firestitch/example": "^7.0.0",
     "@firestitch/message": "^0.2.0",
     "@firestitch/selectbutton": "^0.2.1",
     "codelyzer": "^4.5.0",
