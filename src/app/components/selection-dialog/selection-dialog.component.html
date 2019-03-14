@@ -14,7 +14,8 @@
     <mat-select [(ngModel)]="selectedAction"
                 (selectionChange)="selectAction($event)"
                 fsSelectButton
-                color="primary" placeholder="BULK ACTIONS">
+                color="primary"
+                placeholder="BULK ACTIONS">
       <mat-option *ngFor="let action of data.config.actions" [value]="action">
         {{ action.label }}
       </mat-option>

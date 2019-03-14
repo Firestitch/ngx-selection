@@ -66,6 +66,11 @@ export class SelectionDialogComponent {
     } else if (action.value.type === SelectionActionType.Select) {
       this.optionClick(action.value);
     }
+
+    // Set timeout is very important feature here, because it's ng material value won't be updated without timeout
+    setTimeout(() => {
+      this.selectedAction = null;
+    }, 300);
   }
 
   public optionClick(action: SelectionDialogConfigAction) {
@@ -80,9 +85,6 @@ export class SelectionDialogComponent {
         };
 
         this.actionClick(selectedOption);
-        this.selectedAction = null;
-      } else {
-        this.selectedAction = null;
       }
     })
   }
