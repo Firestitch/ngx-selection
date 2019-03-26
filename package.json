@@ -2,7 +2,7 @@
   "name": "@firestitch/selection",
   "title": "Selection",
   "description": "@firestitch/selection",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-selection"

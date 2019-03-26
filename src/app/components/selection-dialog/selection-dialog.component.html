@@ -1,16 +1,16 @@
-<div mat-dialog-content>
+<div mat-dialog-content class="selection-content">
 
-  <div class="col1">
-    <div class="selected">
+  <div class="selected">
       <span>
         {{ selectedCount }} of {{ allCount }} Selected
       </span>
 
-      <a (click)="selectAllClick()" *ngIf="!allSelected" class="select-all-link">
-        Select All {{ allCount }}
-      </a>
-    </div>
+    <a (click)="selectAllClick()" *ngIf="!allSelected" class="select-all-link">
+      Select All {{ allCount }}
+    </a>
+  </div>
 
+  <div class="actions">
     <mat-select [(ngModel)]="selectedAction"
                 (selectionChange)="selectAction($event)"
                 fsSelectButton
