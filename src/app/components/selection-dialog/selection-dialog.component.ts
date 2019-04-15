@@ -7,17 +7,21 @@ import { SelectionActionType } from '../../classes/selection-action-type.enum';
 
 
 @Component({
-  templateUrl: 'selection-dialog.component.html'
+  templateUrl: 'selection-dialog.component.html',
+  styleUrls: [
+    './selection-dialog.component.scss',
+  ],
 })
 export class SelectionDialogComponent {
 
   public allSelected = false;
 
   public allCount = 0;
-  public selectedCount = 0;
 
   public selectedAction: SelectionDialogConfigAction = null;
+  public selectionIsEmpty = true;
 
+  private _selectedCount = 0;
   private selectionRef: SelectionRef;
 
   constructor(
@@ -29,6 +33,15 @@ export class SelectionDialogComponent {
 
     this.selectedCount = this.data.config.selectedCount;
     this.allCount = this.data.config.allCount;
+  }
+
+  set selectedCount(value) {
+    this._selectedCount = value;
+    this.selectionIsEmpty = this._selectedCount === 0;
+  }
+
+  get selectedCount() {
+    return this._selectedCount;
   }
 
   public actionClick(action: SelectionDialogConfigAction): void {

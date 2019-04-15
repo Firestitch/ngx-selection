@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+.mat-select {
+  &.mat-select-disabled {
+    opacity: 0.4;
+  }
+}

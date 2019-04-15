@@ -13,6 +13,7 @@
   <div class="actions">
     <mat-select [(ngModel)]="selectedAction"
                 (selectionChange)="selectAction($event)"
+                [disabled]="selectionIsEmpty"
                 fsSelectButton
                 color="primary"
                 placeholder="BULK ACTIONS">
