@@ -1,4 +1,5 @@
 import { SelectionActionType } from '../classes/selection-action-type.enum';
+import { Observable } from 'rxjs';
 
 export interface SelectionDialogConfig {
   allCount?: number;
@@ -11,7 +12,9 @@ export interface SelectionDialogConfigAction {
   value?: string;
   label?: string;
   type?: SelectionActionType,
-  options?: (SelectionDialogConfigActionOption | SelectionDialogConfigActionOptionMenu)[];
+  options?: SelectionDialogConfigActionOption[] |
+            SelectionDialogConfigActionOptionMenu[] |
+            Observable<SelectionDialogConfigActionOption[]>;
 }
 
 export interface SelectionDialogConfigActionOption {

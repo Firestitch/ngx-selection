@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
 import { SelectionDialog } from '@firestitch/selection';
 import { SelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -40,6 +41,20 @@ export class ExampleComponent {
         },
         {
           type: SelectionActionType.Select,
+          label: 'Change Color',
+          options: of([
+            {
+              name: 'Red',
+              value: 'red'
+            },
+            {
+              name: 'Blue',
+              value: 'blue'
+            }
+          ])
+        },
+        {
+          type: SelectionActionType.Select,
           label: 'Change Status To',
           options: [
             {
@@ -51,7 +66,7 @@ export class ExampleComponent {
               value: '2'
             }
           ]
-        },
+        }
       ]
     };
 
