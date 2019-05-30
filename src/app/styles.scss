@@ -8,6 +8,14 @@
 
     max-width: 100% !important;
 
+    // For fix problem on iphone devices
+    @media all and (max-width: 400px){
+      .mat-dialog-content {
+        padding: 10px 5px !important;
+        margin: 0 !important;
+      }
+    }
+
     .mat-dialog-container {
       padding: 10px;
     }
@@ -19,6 +27,7 @@
       margin: 0 -10px;
       padding: 0 20px;
       height: 50px;
+      overflow-y: hidden;
 
       .selected {
         //margin-right: 20px;
