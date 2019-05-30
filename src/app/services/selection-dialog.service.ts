@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 import { SelectionRef } from '../classes/selection-ref.model';
+import { Overlay, RepositionScrollStrategy, ScrollStrategy } from '@angular/cdk/overlay';
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class SelectionDialog {
 
   private selectionRef = null;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public overlay: Overlay) {}
 
   public open(config): SelectionRef {
 
@@ -22,6 +23,7 @@ export class SelectionDialog {
     const dialogRef = this.dialog.open(SelectionDialogComponent, {
       width: '100%',
       panelClass: 'fs-selection-pane',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
       hasBackdrop: false,
       position: { left: '0px', bottom: '0px', right: '0px' },
       data: { selectionRef: this.selectionRef, config: config }
