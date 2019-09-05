@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { SelectionDialogConfigActionOption } from '../../interfaces/selection-dialog-config.interface';
 import { isArray, isObject } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { SelectionDialogConfigActionOption } from '../../interfaces/selection-dialog-config.interface';
 
 
 @Component({
@@ -17,9 +18,10 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  constructor( public dialogRef: MatDialogRef<OptionsDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<OptionsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) {}
 
   public ngOnInit() {
 
@@ -38,6 +40,7 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
 
   private setOptions(options) {
     this.options = options;
+
     if (this.options.length) {
       this.selectedOption = this.options[0];
     }

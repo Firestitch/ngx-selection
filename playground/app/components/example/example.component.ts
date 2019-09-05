@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
-import { SelectionDialog } from '@firestitch/selection';
+import { SelectionDialog, SelectionRef } from '@firestitch/selection';
 import { SelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
 import { of } from 'rxjs';
 
 
 @Component({
   selector: 'example',
-  templateUrl: 'example.component.html'
+  templateUrl: 'example.component.html',
+  styleUrls: [
+    './example.component.scss',
+  ]
 })
 export class ExampleComponent {
 
   selected: object[] = [];
-  selectionRef = null;
+  selectionRef: SelectionRef = null;
 
   items = [
       { name: 'Item 1', id: 1 },
@@ -33,6 +36,7 @@ export class ExampleComponent {
     const config: SelectionDialogConfig = {
       allCount: this.items.length,
       selectedCount: this.selected.length,
+      selectAll: true,
       actions: [
         {
           type: SelectionActionType.Action,
@@ -78,6 +82,34 @@ export class ExampleComponent {
     if (this.selectionRef) {
       this.selectionRef.updateSelected(this.selected.length);
     }
+  }
+
+  public changeActions() {
+    this.selectionRef.updateActions([
+      {
+        type: SelectionActionType.Action,
+        value: 'delete',
+        label: 'My changed Action'
+      },
+      {
+        type: SelectionActionType.Select,
+        label: 'Change Hair Color',
+        options: of([
+          {
+            name: 'Red',
+            value: 'red'
+          },
+          {
+            name: 'Blue',
+            value: 'blue'
+          }
+        ])
+      },
+    ])
+  }
+
+  public resetActions() {
+    this.selectionRef.resetActions();
   }
 
   private subscribeToSelectionEvents() {

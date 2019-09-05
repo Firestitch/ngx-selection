@@ -1,6 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { SelectionRef } from '../../classes/selection-ref.model';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { SelectionRef } from '../../classes/selection-ref';
 import { OptionsDialogComponent } from '../options-dialog/options-dialog.component';
 import { SelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
@@ -12,27 +16,28 @@ import { SelectionActionType } from '../../classes/selection-action-type.enum';
     './selection-dialog.component.scss',
   ],
 })
-export class SelectionDialogComponent {
+export class SelectionDialogComponent implements OnInit, OnDestroy {
 
+  public selectAllEnabled = true;
   public allSelected = false;
-
   public allCount = 0;
+
+  public actions: SelectionDialogConfigAction[] = [];
 
   public selectedAction: SelectionDialogConfigAction = null;
   public selectionIsEmpty = true;
 
+  private readonly _selectionRef: SelectionRef;
+  private readonly  _destroy$ = new Subject<void>();
+
   private _selectedCount = 0;
-  private selectionRef: SelectionRef;
 
   constructor(
     public dialogRef: MatDialogRef<SelectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private _dialog: MatDialog,
   ) {
-    this.selectionRef = this.data.selectionRef;
-
-    this.selectedCount = this.data.config.selectedCount;
-    this.allCount = this.data.config.allCount;
+    this._selectionRef = this.data.selectionRef;
   }
 
   set selectedCount(value) {
@@ -44,8 +49,17 @@ export class SelectionDialogComponent {
     return this._selectedCount;
   }
 
+  public ngOnInit(): void {
+    this._listenConfigChanges();
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   public actionClick(action: SelectionDialogConfigAction): void {
-    this.selectionRef.action({
+    this._selectionRef.action({
       label: action.label,
       value: action.value,
       all: this.allSelected,
@@ -54,23 +68,11 @@ export class SelectionDialogComponent {
 
   public selectAllClick(): void {
     this.allSelected = true;
-    this.selectionRef.selectAll(this.allSelected);
+    this._selectionRef.selectAll(this.allSelected);
   }
 
   public cancelClick(): void {
-    this.selectionRef.cancel();
-  }
-
-  public updateSelected(selectedCount: number): void {
-    this.selectedCount = selectedCount;
-
-    this.allSelected = this.selectedCount === this.allCount;
-  }
-
-  public updateAllCount(allCount: number): void {
-    this.allCount = allCount;
-
-    this.allSelected = this.selectedCount === this.allCount;
+    this._selectionRef.cancel();
   }
 
   public selectAction(action) {
@@ -80,7 +82,7 @@ export class SelectionDialogComponent {
       this.optionClick(action.value);
     }
 
-    // Set timeout is very important feature here, because it's ng material value won't be updated without timeout
+    // Set timeout is very important feature here, because ng material value won't be updated without timeout
     setTimeout(() => {
       this.selectedAction = null;
     }, 300);
@@ -100,5 +102,28 @@ export class SelectionDialogComponent {
         this.actionClick(selectedOption);
       }
     })
+  }
+
+  private _listenConfigChanges() {
+    this._selectionRef.configChanges$
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((changes) => {
+        this.allCount = changes.allCount;
+        this.selectedCount = changes.selectedCount;
+        this.actions = changes.actions;
+        this.selectAllEnabled = changes.selectAll;
+
+        if (changes.selectedAllStatus === this.allSelected) {
+          this._checkIfAllSelected();
+        } else {
+          this.allSelected = changes.selectedAllStatus;
+        }
+      });
+  }
+
+  private _checkIfAllSelected() {
+    this.allSelected = this.selectedCount === this.allCount;
   }
 }

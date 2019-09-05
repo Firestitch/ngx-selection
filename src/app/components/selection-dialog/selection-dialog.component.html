@@ -5,7 +5,7 @@
         {{ selectedCount }} of {{ allCount }} Selected
       </span>
 
-    <a (click)="selectAllClick()" *ngIf="!allSelected" class="select-all-link">
+    <a (click)="selectAllClick()" *ngIf="selectAllEnabled && !allSelected" class="select-all-link">
       Select All {{ allCount }}
     </a>
   </div>
@@ -17,7 +17,7 @@
                 fsSelectButton
                 color="primary"
                 placeholder="ACTIONS">
-      <mat-option *ngFor="let action of data.config.actions" [value]="action">
+      <mat-option *ngFor="let action of actions" [value]="action">
         {{ action.label }}
       </mat-option>
     </mat-select>

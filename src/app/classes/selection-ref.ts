@@ -1,42 +1,55 @@
-import { Observable, Subject } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { SelectionConfig } from './selection-config';
 import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
-import { SelectionDialogActionCallbackParams } from '../interfaces/selection-dialog-config.interface';
+import {
+  SelectionDialogActionCallbackParams,
+  SelectionDialogConfig, SelectionDialogConfigAction
+} from '../interfaces/selection-dialog-config.interface';
 
 
 export class SelectionRef {
 
   public dialogRef: MatDialogRef<SelectionDialogComponent>;
+  public destroy$ = new Subject<void>();
 
-  private actionSubject = new Subject<SelectionDialogActionCallbackParams>();
-  private selectAllSubject = new Subject<boolean>();
-  private cancelSubject = new Subject<void>();
+  private readonly _config: SelectionConfig;
+  private _actionSelected$ = new Subject<SelectionDialogActionCallbackParams>();
+  private _allSelect$ = new Subject<boolean>();
+  private _cancel$ = new Subject<void>();
 
-  private _destroy = new Subject<void>();
+  constructor(config: SelectionDialogConfig) {
+    this._config = new SelectionConfig(config);
+  }
 
-  constructor() {}
+  /**
+   * Stream with all changes in config
+   */
+  public get configChanges$() {
+    return this._config.changes$;
+  }
 
   /**
    * Subscribe when action selected
    */
   public actionSelected$() {
-    return this.actionSubject.pipe(takeUntil(this._destroy));
+    return this._actionSelected$.pipe(takeUntil(this.destroy$));
   }
 
   /**
    * Subscribe when "Select All" is selected
    */
   public allSelected$(): Observable<boolean> {
-    return this.selectAllSubject.pipe(takeUntil(this._destroy));
+    return this._allSelect$.pipe(takeUntil(this.destroy$));
   }
 
   /**
    * Subscribe when dialog ref was closed
    */
   public cancelled$(): Observable<void> {
-    return this.cancelSubject.pipe(takeUntil(this._destroy));
+    return this._cancel$.pipe(takeUntil(this.destroy$));
   }
 
   /**
@@ -44,7 +57,7 @@ export class SelectionRef {
    * @param data
    */
   public action(data: SelectionDialogActionCallbackParams) {
-    return this.actionSubject.next(data);
+    return this._actionSelected$.next(data);
   }
 
   /**
@@ -52,7 +65,7 @@ export class SelectionRef {
    * @param data
    */
   public selectAll(data: boolean) {
-    return this.selectAllSubject.next(data);
+    return this._allSelect$.next(data);
   }
 
   /**
@@ -61,7 +74,7 @@ export class SelectionRef {
   public cancel() {
     this.close();
 
-    return this.cancelSubject.next();
+    return this._cancel$.next();
   }
 
 
@@ -77,9 +90,7 @@ export class SelectionRef {
    * @param selectedCount
    */
   public updateSelected(selectedCount: number): void {
-    if (this.dialogRef && this.dialogRef.componentInstance) {
-      this.dialogRef.componentInstance.updateSelected(selectedCount);
-    }
+    this._config.selectedCount = selectedCount;
   }
 
   /**
@@ -87,9 +98,7 @@ export class SelectionRef {
    * @param allCount
    */
   public updateAllCount(allCount: number): void {
-    if (this.dialogRef && this.dialogRef.componentInstance) {
-      this.dialogRef.componentInstance.updateAllCount(allCount);
-    }
+    this._config.allCount = allCount;
   }
 
   /**
@@ -97,17 +106,24 @@ export class SelectionRef {
    * @param status
    */
   public updateSelectedAllStatus(status: boolean) {
-    this.dialogRef.componentInstance.allSelected = status;
+    this._config.selectedAllStatus = status;
+  }
+
+  public updateActions(actions: SelectionDialogConfigAction[]) {
+    this._config.actions = actions;
+  }
+
+  public resetActions() {
+    this._config.resetActions();
   }
 
   /**
    * Destroy ref
    */
   public destroy() {
-    this._destroy.next();
-    this._destroy.complete();
-    this.actionSubject.complete();
-    this.selectAllSubject.complete();
-    this.cancelSubject.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    this._config.destroy();
   }
 }
