@@ -46,6 +46,7 @@
     "@angular/router": "^7.2.1",
     "@compodoc/compodoc": "^1.1.7",
     "@firestitch/checkboxgroup": "^7.1.9",
+    "@firestitch/label": "^7.1.9",
     "@firestitch/common": "^0.5.1",
     "@firestitch/example": "^7.0.0",
     "@firestitch/message": "^0.2.0",
