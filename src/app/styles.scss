@@ -38,6 +38,7 @@
 
         .select-all-link {
           cursor: pointer;
+          font-size: 95%;
         }
       }
     }
@@ -46,10 +47,6 @@
       display: flex;
       margin-left: 20px;
       flex: 1 0 auto;
-
-      .mat-select {
-        width: 115px;
-      }
 
       @media only screen and (max-width: 400px) {
         .cancel-btn {
