@@ -27,6 +27,9 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public selectedAction: SelectionDialogConfigAction = null;
   public selectionIsEmpty = true;
 
+  public noActionsAvailable = false;
+  public selectorPlaceholder = 'ACTIONS';
+
   private readonly _selectionRef: SelectionRef;
   private readonly  _destroy$ = new Subject<void>();
 
@@ -114,6 +117,14 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         this.selectedCount = changes.selectedCount;
         this.actions = changes.actions;
         this.selectAllEnabled = changes.selectAll;
+
+        if (this.actions.length > 0) {
+          this.selectorPlaceholder = 'ACTIONS';
+          this.noActionsAvailable = false;
+        } else {
+          this.selectorPlaceholder = 'NO ACTIONS AVAILABLE';
+          this.noActionsAvailable = true;
+        }
 
         if (changes.selectedAllStatus === this.allSelected) {
           this._checkIfAllSelected();

@@ -3,7 +3,18 @@
 @include mat-core();
 
 .mat-select {
+  max-width: 230px !important;
+
   &.mat-select-disabled {
     opacity: 0.4;
+  }
+}
+
+
+:host {
+  ::ng-deep {
+    .mat-select-value {
+      max-width: unset;
+    }
   }
 }

@@ -13,10 +13,11 @@
   <div class="actions">
     <mat-select [(ngModel)]="selectedAction"
                 (selectionChange)="selectAction($event)"
-                [disabled]="selectionIsEmpty"
+                [disabled]="selectionIsEmpty || noActionsAvailable"
                 fsSelectButton
                 color="primary"
-                placeholder="ACTIONS">
+                [placeholder]="selectorPlaceholder"
+    >
       <mat-option *ngFor="let action of actions" [value]="action">
         {{ action.label }}
       </mat-option>
