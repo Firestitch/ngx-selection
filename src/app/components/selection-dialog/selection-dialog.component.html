@@ -11,17 +11,27 @@
   </div>
 
   <div class="actions">
-    <mat-select [(ngModel)]="selectedAction"
-                (selectionChange)="selectAction($event)"
-                [disabled]="selectionIsEmpty || noActionsAvailable"
-                fsSelectButton
-                color="primary"
-                [placeholder]="selectorPlaceholder"
-    >
-      <mat-option *ngFor="let action of actions" [value]="action">
-        {{ action.label }}
-      </mat-option>
-    </mat-select>
+    <ng-container *ngIf="!singleActionMode; else singleAction">
+      <mat-select (selectionChange)="selectAction($event)"
+                  [disabled]="selectionIsEmpty || noActionsAvailable"
+                  fsSelectButton
+                  color="primary"
+                  [placeholder]="selectorPlaceholder"
+      >
+        <mat-option *ngFor="let action of actions" [value]="action">
+          {{ action.label }}
+        </mat-option>
+      </mat-select>
+    </ng-container>
+
+    <ng-template #singleAction>
+      <button mat-raised-button
+              (click)="selectAction(actions[0])"
+              [disabled]="selectionIsEmpty || noActionsAvailable"
+              color="primary"
+      > {{ actions[0].label }}
+      </button>
+    </ng-template>
 
     <button mat-button (click)="cancelClick()" class="action cancel-btn"> CANCEL </button>
   </div>

@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { SelectionRef } from '../../classes/selection-ref';
 import { OptionsDialogComponent } from '../options-dialog/options-dialog.component';
-import { SelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
+import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
 
 
@@ -22,11 +22,12 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public allSelected = false;
   public allCount = 0;
 
-  public actions: SelectionDialogConfigAction[] = [];
+  public actions: FsSelectionDialogConfigAction[] = [];
 
-  public selectedAction: SelectionDialogConfigAction = null;
+  public selectedAction: FsSelectionDialogConfigAction = null;
   public selectionIsEmpty = true;
 
+  public singleActionMode = false;
   public noActionsAvailable = false;
   public selectorPlaceholder = 'ACTIONS';
 
@@ -61,7 +62,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public actionClick(action: SelectionDialogConfigAction): void {
+  public actionClick(action: FsSelectionDialogConfigAction): void {
     this._selectionRef.action({
       label: action.label,
       value: action.value,
@@ -71,6 +72,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
   public selectAllClick(): void {
     this.allSelected = true;
+    this.selectedCount = this.allCount;
     this._selectionRef.selectAll(this.allSelected);
   }
 
@@ -79,6 +81,8 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   }
 
   public selectAction(action) {
+    this.selectedAction = action;
+
     if (action.value.type === SelectionActionType.Action) {
       this.actionClick(action.value);
     } else if (action.value.type === SelectionActionType.Select) {
@@ -91,7 +95,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     }, 300);
   }
 
-  public optionClick(action: SelectionDialogConfigAction) {
+  public optionClick(action: FsSelectionDialogConfigAction) {
     const dialogRef = this._dialog.open(OptionsDialogComponent, { data: action });
 
     dialogRef.afterClosed().subscribe((response) => {
@@ -118,12 +122,20 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         this.actions = changes.actions;
         this.selectAllEnabled = changes.selectAll;
 
-        if (this.actions.length > 0) {
-          this.selectorPlaceholder = 'ACTIONS';
-          this.noActionsAvailable = false;
-        } else {
+        const countOfActions = this.actions.length;
+
+        if (countOfActions === 0 ) {
           this.selectorPlaceholder = 'NO ACTIONS AVAILABLE';
           this.noActionsAvailable = true;
+          this.singleActionMode = false;
+
+        } else if (countOfActions === 1) {
+          this.singleActionMode = true;
+
+        } else {
+          this.selectorPlaceholder = 'ACTIONS';
+          this.noActionsAvailable = false;
+          this.singleActionMode = false;
         }
 
         if (changes.selectedAllStatus === this.allSelected) {

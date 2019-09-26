@@ -1,34 +1,34 @@
 import { Observable } from 'rxjs';
 import { SelectionActionType } from '../classes/selection-action-type.enum';
 
-export interface SelectionDialogConfig {
+export interface FsSelectionDialogConfig {
   allCount?: number;
   selectedCount?: number;
   selectAll?: boolean;
-  actions?: SelectionDialogConfigAction[];
+  actions?: FsSelectionDialogConfigAction[];
 }
 
-export interface SelectionDialogConfigAction {
+export interface FsSelectionDialogConfigAction {
   tooltip?: string;
   value?: string;
   label?: string;
   type?: SelectionActionType,
-  options?: SelectionDialogConfigActionOption[] |
-            SelectionDialogConfigActionOptionMenu[] |
-            Observable<SelectionDialogConfigActionOption[]>;
+  options?: FsSelectionDialogConfigActionOption[] |
+            FsSelectionDialogConfigActionOptionMenu[] |
+            Observable<FsSelectionDialogConfigActionOption[]>;
 }
 
-export interface SelectionDialogConfigActionOption {
+export interface FsSelectionDialogConfigActionOption {
   name: string;
   value: string;
 }
 
-export interface SelectionDialogConfigActionOptionMenu {
+export interface FsSelectionDialogConfigActionOptionMenu {
   name: string;
-  options: SelectionDialogConfigActionOption[];
+  options: FsSelectionDialogConfigActionOption[];
 }
 
-export interface SelectionDialogActionCallbackParams {
+export interface FsSelectionDialogActionSelected {
   label: string;
   value: any;
   all: boolean;

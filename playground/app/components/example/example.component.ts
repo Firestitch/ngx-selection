@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
 import { SelectionDialog, SelectionRef } from '@firestitch/selection';
-import { SelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
+import { FsSelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
 import { of } from 'rxjs';
 
 
@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 })
 export class ExampleComponent {
 
-  selected: object[] = [];
+  selected: number[] = [];
   selectionRef: SelectionRef = null;
 
   items = [
@@ -33,7 +33,7 @@ export class ExampleComponent {
       return;
     }
 
-    const config: SelectionDialogConfig = {
+    const config: FsSelectionDialogConfig = {
       allCount: this.items.length,
       selectedCount: this.selected.length,
       selectAll: true,
@@ -114,6 +114,7 @@ export class ExampleComponent {
 
   private subscribeToSelectionEvents() {
     this.selectionRef.actionSelected$().subscribe((result) => {
+      console.log('Action Selected ', result);
       let message = 'Selected all';
 
       const data = <any>result;
@@ -128,9 +129,10 @@ export class ExampleComponent {
     });
 
     this.selectionRef.allSelected$().subscribe((all) => {
+      console.log('All Selected ', all);
       this.selected.splice(0, this.selected.length);
       if (all) {
-        this.selected.push(...this.items);
+        this.selected.push(...this.items.map((item) => item.id));
       } else {
         this.selected.splice(0, this.selected.length);
       }

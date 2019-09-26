@@ -1,5 +1,5 @@
 <fs-checkbox-group [(ngModel)]="selected" (change)="selectionChange()" name="selected" label="Checkboxes">
-    <mat-checkbox (click)="open()" *ngFor="let item of items" [value]="item">{{ item.name }}</mat-checkbox>
+    <mat-checkbox (click)="open()" *ngFor="let item of items" [value]="item.id">{{ item.name }}</mat-checkbox>
 </fs-checkbox-group>
 
 <div class="actions" *ngIf="selectionRef">

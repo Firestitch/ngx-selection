@@ -4,6 +4,7 @@
 @mixin fs-selection($theme) {
 
   $primary: mat-palette($theme);
+
   .fs-selection-pane {
 
     max-width: 100% !important;
@@ -18,6 +19,7 @@
 
     .mat-dialog-container {
       padding: 10px;
+      border-radius: 0;
     }
 
     .mat-dialog-content {

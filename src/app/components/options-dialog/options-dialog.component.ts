@@ -4,7 +4,7 @@ import { isArray, isObject } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { SelectionDialogConfigActionOption } from '../../interfaces/selection-dialog-config.interface';
+import { FsSelectionDialogConfigActionOption } from '../../interfaces/selection-dialog-config.interface';
 
 
 @Component({
@@ -12,8 +12,8 @@ import { SelectionDialogConfigActionOption } from '../../interfaces/selection-di
   styleUrls: ['options-dialog.component.scss']
 })
 export class OptionsDialogComponent implements OnInit, OnDestroy {
-  public options: SelectionDialogConfigActionOption[] = [];
-  public selectedOption: SelectionDialogConfigActionOption = null;
+  public options: FsSelectionDialogConfigActionOption[] = [];
+  public selectedOption: FsSelectionDialogConfigActionOption = null;
   public label = '';
 
   private _destroy$ = new Subject();

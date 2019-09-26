@@ -1,27 +1,27 @@
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
 import {
-  SelectionDialogConfig,
-  SelectionDialogConfigAction
+  FsSelectionDialogConfig,
+  FsSelectionDialogConfigAction
 } from '../interfaces/selection-dialog-config.interface';
 
 
 export class SelectionConfig {
 
-  private _defaultActions: SelectionDialogConfigAction[] = [];
+  private _defaultActions: FsSelectionDialogConfigAction[] = [];
 
   private _selectedAllStatus$ = new BehaviorSubject(false);
-  private _actions$ = new BehaviorSubject<SelectionDialogConfigAction[]>([]);
+  private _actions$ = new BehaviorSubject<FsSelectionDialogConfigAction[]>([]);
   private _selectedCount$ = new BehaviorSubject<number>(0);
   private _allCount$ = new BehaviorSubject<number>(0);
   private _selectAll$ = new BehaviorSubject<boolean>(true);
 
   private _destroy$ = new Subject<void>();
 
-  constructor(config: SelectionDialogConfig) {
+  constructor(config: FsSelectionDialogConfig) {
     this._init(config);
   }
 
@@ -50,7 +50,7 @@ export class SelectionConfig {
     return this._actions$.getValue();
   }
 
-  set actions(value: SelectionDialogConfigAction[]) {
+  set actions(value: FsSelectionDialogConfigAction[]) {
     this._actions$.next(value);
   }
 
@@ -95,7 +95,7 @@ export class SelectionConfig {
     this._destroy$.complete();
   }
 
-  private _init(config: SelectionDialogConfig) {
+  private _init(config: FsSelectionDialogConfig) {
     this.selectedCount = config.selectedCount || 0;
     this.allCount = config.allCount || 0;
     this.selectAll = config.selectAll === undefined || config.selectAll;

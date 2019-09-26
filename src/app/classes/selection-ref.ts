@@ -5,8 +5,8 @@ import { takeUntil } from 'rxjs/operators';
 import { SelectionConfig } from './selection-config';
 import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 import {
-  SelectionDialogActionCallbackParams,
-  SelectionDialogConfig, SelectionDialogConfigAction
+  FsSelectionDialogActionSelected,
+  FsSelectionDialogConfig, FsSelectionDialogConfigAction
 } from '../interfaces/selection-dialog-config.interface';
 
 
@@ -16,11 +16,11 @@ export class SelectionRef {
   public destroy$ = new Subject<void>();
 
   private readonly _config: SelectionConfig;
-  private _actionSelected$ = new Subject<SelectionDialogActionCallbackParams>();
+  private _actionSelected$ = new Subject<FsSelectionDialogActionSelected>();
   private _allSelect$ = new Subject<boolean>();
   private _cancel$ = new Subject<void>();
 
-  constructor(config: SelectionDialogConfig) {
+  constructor(config: FsSelectionDialogConfig) {
     this._config = new SelectionConfig(config);
   }
 
@@ -56,7 +56,7 @@ export class SelectionRef {
    * Share event when action was clicked
    * @param data
    */
-  public action(data: SelectionDialogActionCallbackParams) {
+  public action(data: FsSelectionDialogActionSelected) {
     return this._actionSelected$.next(data);
   }
 
@@ -109,7 +109,7 @@ export class SelectionRef {
     this._config.selectedAllStatus = status;
   }
 
-  public updateActions(actions: SelectionDialogConfigAction[]) {
+  public updateActions(actions: FsSelectionDialogConfigAction[]) {
     this._config.actions = actions;
   }
 
