@@ -26,7 +26,7 @@
 
     <ng-template #singleAction>
       <button mat-raised-button
-              (click)="selectAction(actions[0])"
+              (click)="selectAction({ value: actions[0] })"
               [disabled]="selectionIsEmpty || noActionsAvailable"
               color="primary"
       > {{ actions[0].label }}

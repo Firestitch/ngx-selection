@@ -130,6 +130,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
           this.singleActionMode = false;
 
         } else if (countOfActions === 1) {
+          this.noActionsAvailable = false;
           this.singleActionMode = true;
 
         } else {
