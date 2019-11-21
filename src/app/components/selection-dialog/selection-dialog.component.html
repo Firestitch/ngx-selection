@@ -13,6 +13,7 @@
   <div class="actions">
     <ng-container *ngIf="!singleActionMode; else singleAction">
       <mat-select (selectionChange)="selectAction($event)"
+                  [value]="selectedAction"
                   [disabled]="selectionIsEmpty || noActionsAvailable"
                   fsSelectButton
                   color="primary"
