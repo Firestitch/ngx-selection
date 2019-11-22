@@ -13,7 +13,10 @@ export class SelectionDialog {
 
   private selectionRef: SelectionRef = null;
 
-  constructor(public dialog: MatDialog, public overlay: Overlay) {}
+  constructor(
+    public dialog: MatDialog,
+    public overlay: Overlay,
+  ) {}
 
   public open(config): SelectionRef {
 
@@ -22,6 +25,8 @@ export class SelectionDialog {
     }
 
     this.selectionRef = new SelectionRef(config);
+
+    document.body.classList.add('selection-dialog-opened');
 
     const dialogRef = this.dialog.open(SelectionDialogComponent, {
       width: '100%',
@@ -49,6 +54,7 @@ export class SelectionDialog {
       .subscribe(result => {
         this.selectionRef.destroy();
         this.selectionRef = null;
+        document.body.classList.remove('selection-dialog-opened');
       });
 
     return this.selectionRef;
