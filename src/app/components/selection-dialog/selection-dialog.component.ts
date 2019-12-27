@@ -1,5 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,6 +22,7 @@ import { SelectionActionType } from '../../classes/selection-action-type.enum';
   styleUrls: [
     './selection-dialog.component.scss',
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionDialogComponent implements OnInit, OnDestroy {
 
@@ -40,6 +48,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<SelectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private _dialog: MatDialog,
+    private _cdRef: ChangeDetectorRef,
   ) {
     this._selectionRef = this.data.selectionRef;
   }
@@ -92,23 +101,31 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     // Set timeout is very important feature here, because ng material value won't be updated without timeout
     setTimeout(() => {
       this.selectedAction = null;
+
+      this._cdRef.markForCheck();
     }, 300);
   }
 
   public optionClick(action: FsSelectionDialogConfigAction) {
     const dialogRef = this._dialog.open(OptionsDialogComponent, { data: action });
 
-    dialogRef.afterClosed().subscribe((response) => {
-      if (response) {
-        const selectedOption = {
-          label: response.name,
-          value: response.value,
-          all: this.allSelected,
-        };
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((response) => {
+        if (response) {
+          const selectedOption = {
+            label: response.name,
+            value: response.value,
+            all: this.allSelected,
+          };
 
-        this.actionClick(selectedOption);
-      }
-    })
+          this.actionClick(selectedOption);
+
+          this._cdRef.markForCheck();
+        }
+      })
   }
 
   private _listenConfigChanges() {
@@ -144,6 +161,8 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         } else {
           this.allSelected = changes.selectedAllStatus;
         }
+
+        this._cdRef.markForCheck();
       });
   }
 

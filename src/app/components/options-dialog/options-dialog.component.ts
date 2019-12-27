@@ -1,5 +1,12 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { isArray, isObject } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +16,8 @@ import { FsSelectionDialogConfigActionOption } from '../../interfaces/selection-
 
 @Component({
   templateUrl: 'options-dialog.component.html',
-  styleUrls: ['options-dialog.component.scss']
+  styleUrls: ['options-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionsDialogComponent implements OnInit, OnDestroy {
   public options: FsSelectionDialogConfigActionOption[] = [];
@@ -20,7 +28,8 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<OptionsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data
+    @Inject(MAT_DIALOG_DATA) public data,
+    private _cdRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit() {
@@ -34,7 +43,10 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._destroy$)
       )
-      .subscribe(options => this.setOptions(options));
+      .subscribe(options => {
+        this.setOptions(options);
+        this._cdRef.markForCheck();
+      });
     }
   }
 
