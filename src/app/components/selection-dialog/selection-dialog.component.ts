@@ -7,6 +7,8 @@ import {
   OnInit
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -71,11 +73,11 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public actionClick(action: FsSelectionDialogConfigAction): void {
+  public actionClick(action: FsSelectionDialogConfigAction, value: any): void {
     this._selectionRef.action({
-      label: action.label,
-      value: action.value,
+      value: value,
       all: this.allSelected,
+      action: action
     });
   }
 
@@ -92,16 +94,15 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public selectAction(action) {
     this.selectedAction = action;
 
-    if (action.value.type === SelectionActionType.Action) {
-      this.actionClick(action.value);
-    } else if (action.value.type === SelectionActionType.Select) {
-      this.optionClick(action.value);
+    if (action.type === SelectionActionType.Action) {
+      this.actionClick(action, action.value);
+    } else if (action.type === SelectionActionType.Select) {
+      this.optionClick(action);
     }
 
     // Set timeout is very important feature here, because ng material value won't be updated without timeout
     setTimeout(() => {
       this.selectedAction = null;
-
       this._cdRef.markForCheck();
     }, 300);
   }
@@ -115,14 +116,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
       )
       .subscribe((response) => {
         if (response) {
-          const selectedOption = {
-            label: response.name,
-            value: response.value,
-            all: this.allSelected,
-          };
-
-          this.actionClick(selectedOption);
-
+          this.actionClick(action, response.value);
           this._cdRef.markForCheck();
         }
       })

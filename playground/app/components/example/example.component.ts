@@ -46,6 +46,7 @@ export class ExampleComponent {
         {
           type: SelectionActionType.Select,
           label: 'Change Color',
+          value: 'color',
           options: of([
             {
               name: 'Red',
@@ -60,6 +61,7 @@ export class ExampleComponent {
         {
           type: SelectionActionType.Select,
           label: 'Change Status To',
+          value: 'status',
           options: [
             {
               name: 'TODO',
@@ -71,7 +73,7 @@ export class ExampleComponent {
             }
           ]
         }
-      ]
+      ],
     };
 
     this.selectionRef = this.selectionDialog.open(config);
@@ -94,6 +96,7 @@ export class ExampleComponent {
       {
         type: SelectionActionType.Select,
         label: 'Change Hair Color',
+        value: 'hair',
         options: of([
           {
             name: 'Red',
@@ -113,7 +116,8 @@ export class ExampleComponent {
   }
 
   private subscribeToSelectionEvents() {
-    this.selectionRef.actionSelected$().subscribe((result) => {
+    this.selectionRef.actionSelected$()
+    .subscribe((result) => {
       console.log('Action Selected ', result);
       let message = 'Selected all';
 

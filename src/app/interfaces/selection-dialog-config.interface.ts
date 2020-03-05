@@ -29,7 +29,7 @@ export interface FsSelectionDialogConfigActionOptionMenu {
 }
 
 export interface FsSelectionDialogActionSelected {
-  label: string;
   value: any;
+  action: FsSelectionDialogConfigAction;
   all: boolean;
 }
