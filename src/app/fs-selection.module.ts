@@ -42,7 +42,7 @@ import { SelectionDialog } from './services/selection-dialog.service';
   ]
 })
 export class FsSelectionModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FsSelectionModule> {
     return {
       ngModule: FsSelectionModule,
       providers: [SelectionDialog],
