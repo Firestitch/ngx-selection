@@ -9,9 +9,10 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { isArray, isObject } from 'lodash-es';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
-import { FsSelectionDialogConfigActionOption } from '../../interfaces/selection-dialog-config.interface';
+import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-dialog-config.interface';
+import { isFunction } from 'rxjs/internal-compatibility';
 
 
 @Component({
@@ -20,8 +21,8 @@ import { FsSelectionDialogConfigActionOption } from '../../interfaces/selection-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionsDialogComponent implements OnInit, OnDestroy {
-  public options: FsSelectionDialogConfigActionOption[] = [];
-  public selectedOption: FsSelectionDialogConfigActionOption = null;
+  public options: FsSelectionDialogConfigActionValue[] = [];
+  public selectedOption: FsSelectionDialogConfigActionValue = null;
   public label = '';
 
   private _destroy$ = new Subject();
@@ -33,37 +34,41 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
-
     this.label = this.data.label;
-
-    if (isArray(this.data.options)) {
-      this.setOptions(this.data.options);
-    } else if (isObject(this.data.options)) {
-      this.data.options
-      .pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe(options => {
-        this.setOptions(options);
-        this._cdRef.markForCheck();
-      });
-    }
-  }
-
-  private setOptions(options) {
-    this.options = options;
-
-    if (this.options.length) {
-      this.selectedOption = this.options[0];
-    }
+    this._initValues(this.data.values);
   }
 
   public close(data = null) {
     this.dialogRef.close(data);
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  private _initValues(values) {
+    if (isArray(values)) {
+      this.setOptions(values);
+    } else if (isFunction(values)) {
+      this._initValues(values());
+    } else if (isObject(values)) {
+      this.data.values
+        .pipe(
+          take(1),
+          takeUntil(this._destroy$)
+        )
+        .subscribe(options => {
+          this.setOptions(options);
+          this._cdRef.markForCheck();
+        });
+    }
+  }
+  private setOptions(options) {
+    this.options = options;
+
+    if (this.options.length) {
+      this.selectedOption = this.options[0];
+    }
   }
 }

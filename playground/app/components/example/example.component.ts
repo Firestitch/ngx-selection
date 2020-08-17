@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
-import { SelectionDialog, SelectionRef } from '@firestitch/selection';
-import { FsSelectionDialogConfig, SelectionActionType } from '@firestitch/selection';
+import {
+  FsSelectionDialogConfig,
+  SelectionActionType,
+  SelectionDialog,
+  SelectionRef
+} from '@firestitch/selection';
 import { of } from 'rxjs';
 
 
@@ -40,14 +44,14 @@ export class ExampleComponent {
       actions: [
         {
           type: SelectionActionType.Action,
-          value: 'delete',
+          name: 'delete',
           label: 'Delete'
         },
         {
           type: SelectionActionType.Select,
           label: 'Change Color',
-          value: 'color',
-          options: of([
+          name: 'color',
+          values: of([
             {
               name: 'Red',
               value: 'red'
@@ -61,8 +65,8 @@ export class ExampleComponent {
         {
           type: SelectionActionType.Select,
           label: 'Change Status To',
-          value: 'status',
-          options: [
+          name: 'status',
+          values: [
             {
               name: 'TODO',
               value: '1'
@@ -72,7 +76,7 @@ export class ExampleComponent {
               value: '2'
             }
           ]
-        }
+        },
       ],
     };
 
@@ -90,14 +94,14 @@ export class ExampleComponent {
     this.selectionRef.updateActions([
       {
         type: SelectionActionType.Action,
-        value: 'delete',
+        name: 'delete',
         label: 'My changed Action'
       },
       {
         type: SelectionActionType.Select,
         label: 'Change Hair Color',
-        value: 'hair',
-        options: of([
+        name: 'hair',
+        values: of([
           {
             name: 'Red',
             value: 'red'

@@ -7,7 +7,6 @@ import {
   OnInit
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
 
 
 import { Subject } from 'rxjs';
@@ -95,7 +94,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     this.selectedAction = action;
 
     if (action.type === SelectionActionType.Action) {
-      this.actionClick(action, action.value);
+      this.actionClick(action, action.name);
     } else if (action.type === SelectionActionType.Select) {
       this.optionClick(action);
     }
@@ -116,7 +115,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
       )
       .subscribe((response) => {
         if (response) {
-          this.actionClick(action, response.value);
+          this.actionClick(action, response.name);
           this._cdRef.markForCheck();
         }
       })

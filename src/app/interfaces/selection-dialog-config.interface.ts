@@ -8,24 +8,21 @@ export interface FsSelectionDialogConfig {
   actions?: FsSelectionDialogConfigAction[];
 }
 
+export type FsSelectionDialogConfigValuesFn = () =>
+  FsSelectionDialogConfigActionValue[] |
+  Observable<FsSelectionDialogConfigActionValue[]>;
+
 export interface FsSelectionDialogConfigAction {
   tooltip?: string;
-  value?: string;
+  name?: string;
   label?: string;
   type?: SelectionActionType,
-  options?: FsSelectionDialogConfigActionOption[] |
-            FsSelectionDialogConfigActionOptionMenu[] |
-            Observable<FsSelectionDialogConfigActionOption[]>;
+  values?: FsSelectionDialogConfigValuesFn | ReturnType<FsSelectionDialogConfigValuesFn>;
 }
 
-export interface FsSelectionDialogConfigActionOption {
+export interface FsSelectionDialogConfigActionValue {
   name: string;
   value: string;
-}
-
-export interface FsSelectionDialogConfigActionOptionMenu {
-  name: string;
-  options: FsSelectionDialogConfigActionOption[];
 }
 
 export interface FsSelectionDialogActionSelected {
