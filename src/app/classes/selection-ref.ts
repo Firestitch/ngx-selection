@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { SelectionConfig } from './selection-config';
 import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 import {
-  FsSelectionDialogActionSelected,
+  FsSelectionActionSelected,
   FsSelectionDialogConfig, FsSelectionDialogConfigAction
 } from '../interfaces/selection-dialog-config.interface';
 
@@ -16,7 +16,7 @@ export class SelectionRef {
   public destroy$ = new Subject<void>();
 
   private readonly _config: SelectionConfig;
-  private _actionSelected$ = new Subject<FsSelectionDialogActionSelected>();
+  private _actionSelected$ = new Subject<FsSelectionActionSelected>();
   private _allSelect$ = new Subject<boolean>();
   private _cancel$ = new Subject<void>();
 
@@ -34,7 +34,7 @@ export class SelectionRef {
   /**
    * Subscribe when action selected
    */
-  public actionSelected$() {
+  public actionSelected$(): Observable<FsSelectionActionSelected> {
     return this._actionSelected$.pipe(takeUntil(this.destroy$));
   }
 
@@ -56,7 +56,7 @@ export class SelectionRef {
    * Share event when action was clicked
    * @param data
    */
-  public action(data: FsSelectionDialogActionSelected) {
+  public action(data: FsSelectionActionSelected) {
     return this._actionSelected$.next(data);
   }
 

@@ -1,8 +1,10 @@
 @import '~@angular/material/theming';
 @import '~@firestitch/message/styles.scss';
+@import '~@firestitch/form/styles.scss';
 
 @import './../tools/assets/playground.scss';
 @import '../src/app/styles.scss';
 @include mat-core();
 
 @include fs-selection($mat-blue);
+@include fs-form($mat-blue);

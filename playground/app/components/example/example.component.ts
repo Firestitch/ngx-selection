@@ -1,10 +1,12 @@
+import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
 import {
   FsSelectionDialogConfig,
   SelectionActionType,
   SelectionDialog,
-  SelectionRef
+  SelectionRef,
+  FsSelectionActionSelected
 } from '@firestitch/selection';
 import { of } from 'rxjs';
 
@@ -18,8 +20,21 @@ import { of } from 'rxjs';
 })
 export class ExampleComponent {
 
-  selected: number[] = [];
-  selectionRef: SelectionRef = null;
+  public selected: number[] = [];
+  public selectionRef: SelectionRef = null;
+
+  private _data = [
+    {
+      name: 'Red',
+      value: 'red',
+      image: './assets/red.png'
+    },
+    {
+      name: 'Blue',
+      value: 'blue',
+      image: './assets/blue.png'
+    }
+  ];
 
   items = [
       { name: 'Item 1', id: 1 },
@@ -28,8 +43,10 @@ export class ExampleComponent {
       { name: 'Item 4', id: 4 }
     ];
 
-  constructor(private selectionDialog: SelectionDialog,
-              private fsMessage: FsMessage) {}
+  constructor(
+    private selectionDialog: SelectionDialog,
+    private fsMessage: FsMessage
+  ) { }
 
   public open() {
 
@@ -48,19 +65,25 @@ export class ExampleComponent {
           label: 'Delete'
         },
         {
-          type: SelectionActionType.Select,
+          type: SelectionActionType.Autocomplete,
           label: 'Change Color',
           name: 'color',
-          values: of([
-            {
-              name: 'Red',
-              value: 'red'
-            },
-            {
-              name: 'Blue',
-              value: 'blue'
-            }
-          ])
+          values: (keyword) => {
+            return of(this._data)
+              .pipe(
+                map((data) => {
+                  return data.filter((item) => {
+                    return !keyword || item.name.toLowerCase().indexOf(keyword) >= 0;
+                  });
+                }),
+              );
+          }
+        },
+        {
+          type: SelectionActionType.Select,
+          label: 'Change Hair Color',
+          name: 'color',
+          values: of(this._data)
         },
         {
           type: SelectionActionType.Select,
@@ -121,16 +144,15 @@ export class ExampleComponent {
 
   private subscribeToSelectionEvents() {
     this.selectionRef.actionSelected$()
-    .subscribe((result) => {
+    .subscribe((result: FsSelectionActionSelected) => {
       console.log('Action Selected ', result);
       let message = 'Selected all';
 
-      const data = <any>result;
-      if (!data.all) {
+      if (!result.all) {
         message = `Selected ${this.selected.length}`;
       }
 
-      message = `${message} for selection processing ${(data.label)} (${data.value})`;
+      message = `${message} for selection processing ${(result.name)} (${result.value})`;
 
       this.fsMessage.success(message);
       this.selectionRef.cancel();

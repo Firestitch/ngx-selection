@@ -10,20 +10,20 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FsSelectButtonModule } from '@firestitch/selectbutton';
+import { FsBadgeModule } from '@firestitch/badge';
+import { FsFormModule } from '@firestitch/form';
+import { FsAutocompleteModule } from '@firestitch/autocomplete';
 
-import { OptionsDialogComponent } from './components/options-dialog/options-dialog.component';
+import { SelectDialogComponent } from './components/select-dialog/select-dialog.component';
 import { SelectionDialogComponent } from './components/selection-dialog/selection-dialog.component';
+import { AutocompleteDialogComponent } from './components/autocomplete-dialog/autocomplete-dialog.component';
 import { SelectionDialog } from './services/selection-dialog.service';
-
 
 @NgModule({
   imports: [
-    // ng
     CommonModule,
     FormsModule,
-    FsSelectButtonModule,
 
-    // material
     MatDialogModule,
     MatMenuModule,
     MatButtonModule,
@@ -31,14 +31,21 @@ import { SelectionDialog } from './services/selection-dialog.service';
     MatIconModule,
     MatCheckboxModule,
     MatTooltipModule,
+
+    FsSelectButtonModule,
+    FsAutocompleteModule,
+    FsBadgeModule,
+    FsFormModule,
   ],
   entryComponents: [
     SelectionDialogComponent,
-    OptionsDialogComponent,
+    SelectDialogComponent,
+    AutocompleteDialogComponent,
   ],
   declarations: [
     SelectionDialogComponent,
-    OptionsDialogComponent,
+    SelectDialogComponent,
+    AutocompleteDialogComponent,
   ]
 })
 export class FsSelectionModule {

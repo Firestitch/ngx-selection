@@ -13,9 +13,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { SelectionRef } from '../../classes/selection-ref';
-import { OptionsDialogComponent } from '../options-dialog/options-dialog.component';
+import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
 import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
+import { AutocompleteDialogComponent } from '../autocomplete-dialog/autocomplete-dialog.component';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
   public singleActionMode = false;
   public noActionsAvailable = false;
-  public selectorPlaceholder = 'ACTIONS';
+  public selectorPlaceholder = 'Actions';
 
   private readonly _selectionRef: SelectionRef;
   private readonly  _destroy$ = new Subject<void>();
@@ -72,9 +73,10 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public actionClick(action: FsSelectionDialogConfigAction, value: any): void {
+  public actionClick(action: FsSelectionDialogConfigAction, value: any, name: string): void {
     this._selectionRef.action({
       value: value,
+      name: name,
       all: this.allSelected,
       action: action
     });
@@ -94,9 +96,11 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     this.selectedAction = action;
 
     if (action.type === SelectionActionType.Action) {
-      this.actionClick(action, action.name);
+      this.actionClick(action, action.value, '');
     } else if (action.type === SelectionActionType.Select) {
-      this.optionClick(action);
+      this._openSelectDialog(action);
+    } else if (action.type === SelectionActionType.Autocomplete) {
+      this._openAutocompleteDialog(action);
     }
 
     // Set timeout is very important feature here, because ng material value won't be updated without timeout
@@ -106,8 +110,11 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     }, 300);
   }
 
-  public optionClick(action: FsSelectionDialogConfigAction) {
-    const dialogRef = this._dialog.open(OptionsDialogComponent, { data: action });
+  private _openSelectDialog(action: FsSelectionDialogConfigAction) {
+    const dialogRef = this._dialog.open(SelectDialogComponent, {
+      data: action,
+      width: '400px',
+    });
 
     dialogRef.afterClosed()
       .pipe(
@@ -115,7 +122,25 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
       )
       .subscribe((response) => {
         if (response) {
-          this.actionClick(action, response.name);
+          this.actionClick(action, response.value, response.name);
+          this._cdRef.markForCheck();
+        }
+      })
+  }
+
+  private _openAutocompleteDialog(action: FsSelectionDialogConfigAction) {
+    const dialogRef = this._dialog.open(AutocompleteDialogComponent, {
+      data: action,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.actionClick(action, response.value, response.name);
           this._cdRef.markForCheck();
         }
       })
@@ -135,7 +160,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         const countOfActions = this.actions.length;
 
         if (countOfActions === 0 ) {
-          this.selectorPlaceholder = 'NO ACTIONS AVAILABLE';
+          this.selectorPlaceholder = 'No Actions Available';
           this.noActionsAvailable = true;
           this.singleActionMode = false;
 
@@ -144,7 +169,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
           this.singleActionMode = true;
 
         } else {
-          this.selectorPlaceholder = 'ACTIONS';
+          this.selectorPlaceholder = 'Actions';
           this.noActionsAvailable = false;
           this.singleActionMode = false;
         }

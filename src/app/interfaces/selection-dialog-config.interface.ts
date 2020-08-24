@@ -8,7 +8,7 @@ export interface FsSelectionDialogConfig {
   actions?: FsSelectionDialogConfigAction[];
 }
 
-export type FsSelectionDialogConfigValuesFn = () =>
+export type FsSelectionDialogConfigValuesFn = (data?: any) =>
   FsSelectionDialogConfigActionValue[] |
   Observable<FsSelectionDialogConfigActionValue[]>;
 
@@ -25,8 +25,9 @@ export interface FsSelectionDialogConfigActionValue {
   value: string;
 }
 
-export interface FsSelectionDialogActionSelected {
+export interface FsSelectionActionSelected {
   value: any;
+  name: string;
   action: FsSelectionDialogConfigAction;
   all: boolean;
 }

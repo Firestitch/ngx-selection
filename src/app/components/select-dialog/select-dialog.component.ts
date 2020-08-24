@@ -14,13 +14,12 @@ import { take, takeUntil } from 'rxjs/operators';
 import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-dialog-config.interface';
 import { isFunction } from 'rxjs/internal-compatibility';
 
-
 @Component({
-  templateUrl: 'options-dialog.component.html',
-  styleUrls: ['options-dialog.component.scss'],
+  templateUrl: 'select-dialog.component.html',
+  styleUrls: ['select-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OptionsDialogComponent implements OnInit, OnDestroy {
+export class SelectDialogComponent implements OnInit, OnDestroy {
   public options: FsSelectionDialogConfigActionValue[] = [];
   public selectedOption: FsSelectionDialogConfigActionValue = null;
   public label = '';
@@ -28,7 +27,7 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
-    public dialogRef: MatDialogRef<OptionsDialogComponent>,
+    public dialogRef: MatDialogRef<SelectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private _cdRef: ChangeDetectorRef,
   ) {}
@@ -40,6 +39,11 @@ export class OptionsDialogComponent implements OnInit, OnDestroy {
 
   public close(data = null) {
     this.dialogRef.close(data);
+  }
+
+
+  public continue(): void {
+    this.close(this.selectedOption);
   }
 
   public ngOnDestroy() {

@@ -1,0 +1,16 @@
+<form (fsForm)="continue()" [dirtySubmitButton]="false">
+  <div mat-dialog-title> {{ label }}</div>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-select [(ngModel)]="selectedOption" name="selected" required>
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" color="primary" mat-button>Continue</button>
+    <button type="button" mat-button (click)="close()">Cancel</button>
+  </mat-dialog-actions>
+</form>

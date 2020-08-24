@@ -1,0 +1,24 @@
+<form (fsForm)="continue()" [dirtySubmitButton]="false">
+  <div mat-dialog-title>{{ label }}</div>
+  <mat-dialog-content>
+    <fs-autocomplete
+      [fetch]="fetch"
+      [displayWith]="displayWith"
+      [fetchOnFocus]="true"
+      [(ngModel)]="selected"
+      [required]="true"
+      panelClass="fs-selection-autocomplete-panel"
+      name="selected">
+      <ng-template fsAutocompleteTemplate let-data="data">
+        <div class="row">
+          <fs-badge size="30" [image]="data.image" *ngIf="data.image"></fs-badge>
+          <span>{{ data.name }}</span>
+        </div>
+      </ng-template>
+    </fs-autocomplete>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" color="primary" mat-button>Continue</button>
+    <button type="button" mat-button (click)="close()">Cancel</button>
+  </mat-dialog-actions>
+</form>

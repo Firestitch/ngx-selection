@@ -51,7 +51,7 @@ export class SelectionDialog {
       .pipe(
         takeUntil(this.selectionRef.destroy$)
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         this.selectionRef.destroy();
         this.selectionRef = null;
         document.body.classList.remove('selection-dialog-opened');

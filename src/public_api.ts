@@ -10,7 +10,7 @@ export { SelectionDialog } from './app/services/selection-dialog.service';
 export {
   FsSelectionDialogConfig,
   FsSelectionDialogConfigAction,
-  FsSelectionDialogActionSelected,
+  FsSelectionActionSelected,
   FsSelectionDialogConfigValuesFn,
 } from './app/interfaces/selection-dialog-config.interface';
 
