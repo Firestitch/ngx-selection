@@ -16,7 +16,7 @@
                   [value]="selectedAction"
                   [disabled]="selectionIsEmpty || noActionsAvailable"
                   fsSelectButton
-                  color="primary"
+                  [color]="Color.Primary"
                   [placeholder]="selectorPlaceholder"
       >
         <mat-option *ngFor="let action of actions" [value]="action">

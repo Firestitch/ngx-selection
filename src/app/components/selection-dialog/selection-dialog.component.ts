@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
+import { Color } from '@firestitch/selectbutton';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -40,6 +41,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public singleActionMode = false;
   public noActionsAvailable = false;
   public selectorPlaceholder = 'Actions';
+  public Color = Color;
 
   private readonly _selectionRef: SelectionRef;
   private readonly  _destroy$ = new Subject<void>();
