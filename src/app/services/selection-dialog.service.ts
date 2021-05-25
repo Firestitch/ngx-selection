@@ -8,7 +8,9 @@ import { SelectionDialogComponent } from '../components/selection-dialog/selecti
 import { SelectionRef } from '../classes/selection-ref';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SelectionDialog {
 
   private selectionRef: SelectionRef = null;

@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { FsAutocompleteModule } from '@firestitch/autocomplete';
 import { SelectDialogComponent } from './components/select-dialog/select-dialog.component';
 import { SelectionDialogComponent } from './components/selection-dialog/selection-dialog.component';
 import { AutocompleteDialogComponent } from './components/autocomplete-dialog/autocomplete-dialog.component';
-import { SelectionDialog } from './services/selection-dialog.service';
+
 
 @NgModule({
   imports: [
@@ -48,11 +48,4 @@ import { SelectionDialog } from './services/selection-dialog.service';
     AutocompleteDialogComponent,
   ]
 })
-export class FsSelectionModule {
-  static forRoot(): ModuleWithProviders<FsSelectionModule> {
-    return {
-      ngModule: FsSelectionModule,
-      providers: [SelectionDialog],
-    };
-  }
-}
+export class FsSelectionModule {}
