@@ -68,6 +68,7 @@ export class ExampleComponent {
           type: SelectionActionType.Autocomplete,
           label: 'Change Color',
           name: 'color',
+          placeholder: 'Color',
           values: (keyword) => {
             return of(this._data)
               .pipe(

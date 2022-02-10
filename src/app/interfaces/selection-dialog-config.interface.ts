@@ -16,6 +16,7 @@ export interface FsSelectionDialogConfigAction {
   tooltip?: string;
   name?: string;
   label?: string;
+  placeholder?: string;
   type?: SelectionActionType,
   values?: FsSelectionDialogConfigValuesFn | ReturnType<FsSelectionDialogConfigValuesFn>;
 }

@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 
 import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-dialog-config.interface';
 
+
 @Component({
   templateUrl: 'autocomplete-dialog.component.html',
   styleUrls: ['autocomplete-dialog.component.scss'],
@@ -27,17 +28,22 @@ export class AutocompleteDialogComponent implements OnInit, OnDestroy {
   public options: FsSelectionDialogConfigActionValue[] = [];
   public selected: FsSelectionDialogConfigActionValue = null;
   public label = '';
+  public placeholder: string = '';
 
   private _destroy$ = new Subject();
 
   constructor(
     public dialogRef: MatDialogRef<AutocompleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    //private _cdRef: ChangeDetectorRef,
-  ) {}
+    // private _cdRef: ChangeDetectorRef,
+  ) { }
 
   public ngOnInit() {
     this.label = this.data.label;
+
+    if (this.data.placeholder) {
+      this.placeholder = this.data.placeholder;
+    }
   }
 
   public close(data = null) {
@@ -57,7 +63,7 @@ export class AutocompleteDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-   public fetch = (keyword: string) => {
+  public fetch = (keyword: string) => {
     return this.data.values(keyword);
   };
 
