@@ -2,7 +2,7 @@
 @import '~@firestitch/message/styles.scss';
 @import '~@firestitch/form/styles.scss';
 
-@import './../tools/assets/playground.scss';
+@import './~@firestitch/component-tools/assets/playground.scss';
 @import '../src/app/styles.scss';
 @include mat.core();
 
