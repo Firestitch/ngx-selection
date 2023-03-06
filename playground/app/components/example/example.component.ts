@@ -20,7 +20,7 @@ import { of } from 'rxjs';
 })
 export class ExampleComponent {
 
-  public selected: number[] = [];
+  public selected: any[] = [];
   public selectionRef: SelectionRef = null;
 
   private _data = [
@@ -37,10 +37,10 @@ export class ExampleComponent {
   ];
 
   items = [
-      { name: 'Item 1', id: 1 },
-      { name: 'Item 2', id: 2 },
-      { name: 'Item 3', id: 3 },
-      { name: 'Item 4', id: 4 }
+      { name: 'Item 1', id: '1' },
+      { name: 'Item 2', id: '2' },
+      { name: 'Item 3', id: '3' },
+      { name: 'Item 4', id: '4' }
     ];
 
   constructor(
@@ -163,7 +163,8 @@ export class ExampleComponent {
       console.log('All Selected ', all);
       this.selected.splice(0, this.selected.length);
       if (all) {
-        this.selected.push(...this.items.map((item) => item.id));
+        this.selected.push(...this.items
+          .map((item) => item.id));
       } else {
         this.selected.splice(0, this.selected.length);
       }
