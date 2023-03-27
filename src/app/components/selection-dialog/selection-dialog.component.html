@@ -2,23 +2,26 @@
 
   <div class="selected">
       <span>
-        {{ selectedCount }} of {{ allCount }} Selected
+        {{ selectedCount }} <ng-container *ngIf="allCount">of {{ allCount }}</ng-container> Selected
       </span>
 
-    <a (click)="selectAllClick()" *ngIf="selectAllEnabled && !allSelected" class="select-all-link">
+    <a 
+        (click)="selectAllClick()" 
+        *ngIf="selectAllEnabled && !allSelected" 
+        class="select-all-link">
       Select All {{ allCount }}
     </a>
   </div>
 
   <div class="actions">
     <ng-container *ngIf="!singleActionMode; else singleAction">
-      <mat-select (selectionChange)="selectAction($event.value)"
-                  [value]="selectedAction"
-                  [disabled]="selectionIsEmpty || noActionsAvailable"
-                  fsSelectButton
-                  [color]="Color.Primary"
-                  [placeholder]="selectorPlaceholder"
-      >
+      <mat-select 
+          (selectionChange)="selectAction($event.value)"
+          [value]="selectedAction"
+          [disabled]="selectionIsEmpty || noActionsAvailable"
+          fsSelectButton
+          [color]="Color.Primary"
+          [placeholder]="selectorPlaceholder">
         <mat-option *ngFor="let action of actions" [value]="action">
           {{ action.label }}
         </mat-option>

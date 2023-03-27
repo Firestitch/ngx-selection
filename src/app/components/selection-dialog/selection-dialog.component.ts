@@ -29,7 +29,7 @@ import { AutocompleteDialogComponent } from '../autocomplete-dialog/autocomplete
 })
 export class SelectionDialogComponent implements OnInit, OnDestroy {
 
-  public selectAllEnabled = true;
+  public selectAllEnabled = false;
   public allSelected = false;
   public allCount = 0;
 

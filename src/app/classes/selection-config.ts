@@ -98,7 +98,7 @@ export class SelectionConfig {
   private _init(config: FsSelectionDialogConfig) {
     this.selectedCount = config.selectedCount || 0;
     this.allCount = config.allCount || 0;
-    this.selectAll = config.selectAll === undefined || config.selectAll;
+    this.selectAll = !!config.selectAll;
     this._defaultActions = config.actions;
 
     this.resetActions();

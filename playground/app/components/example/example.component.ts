@@ -1,5 +1,5 @@
-import { map } from 'rxjs/operators';
-import { Component } from '@angular/core';
+import { map, takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
 import { FsMessage } from '@firestitch/message';
 import {
   FsSelectionDialogConfig,
@@ -8,7 +8,7 @@ import {
   SelectionRef,
   FsSelectionActionSelected
 } from '@firestitch/selection';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 
 @Component({
@@ -18,10 +18,12 @@ import { of } from 'rxjs';
     './example.component.scss',
   ]
 })
-export class ExampleComponent {
+export class ExampleComponent implements OnDestroy {
 
   public selected: any[] = [];
   public selectionRef: SelectionRef = null;
+
+  private _destroy$ = new Subject();
 
   private _data = [
     {
@@ -144,7 +146,11 @@ export class ExampleComponent {
   }
 
   private subscribeToSelectionEvents() {
-    this.selectionRef.actionSelected$()
+    this.selectionRef
+    .actionSelected$()
+    .pipe(
+      takeUntil(this._destroy$),
+    )
     .subscribe((result: FsSelectionActionSelected) => {
       console.log('Action Selected ', result);
       let message = 'Selected all';
@@ -159,7 +165,12 @@ export class ExampleComponent {
       this.selectionRef.cancel();
     });
 
-    this.selectionRef.allSelected$().subscribe((all) => {
+    this.selectionRef
+    .allSelected$()
+    .pipe(
+      takeUntil(this._destroy$),
+    )
+    .subscribe((all) => {
       console.log('All Selected ', all);
       this.selected.splice(0, this.selected.length);
       if (all) {
@@ -175,4 +186,10 @@ export class ExampleComponent {
       this.selectionRef = null;
     });
   }
+  
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
 }
