@@ -5,13 +5,6 @@ let exec = function(cmd) {
   execSync(cmd, { stdio: 'inherit' });
 }
 
-fs.rmSync('node_modules', { recursive: true, force: true });
-fs.rmSync('package-lock.json', {  force: true });
-
-exec('npm install');
-
-exec('git add .');
-exec('git commit --message="Angular 13 Clean repo"');
 
 exec('node node_modules/@angular/cli/bin/ng update @angular/core@13 @angular/cli@13 --force');
 
