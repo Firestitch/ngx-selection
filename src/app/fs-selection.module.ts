@@ -20,32 +20,25 @@ import { AutocompleteDialogComponent } from './components/autocomplete-dialog/au
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-
-    MatDialogModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatTooltipModule,
-
-    FsSelectButtonModule,
-    FsAutocompleteModule,
-    FsBadgeModule,
-    FsFormModule,
-  ],
-  entryComponents: [
-    SelectionDialogComponent,
-    SelectDialogComponent,
-    AutocompleteDialogComponent,
-  ],
-  declarations: [
-    SelectionDialogComponent,
-    SelectDialogComponent,
-    AutocompleteDialogComponent,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatIconModule,
+        MatCheckboxModule,
+        MatTooltipModule,
+        FsSelectButtonModule,
+        FsAutocompleteModule,
+        FsBadgeModule,
+        FsFormModule,
+    ],
+    declarations: [
+        SelectionDialogComponent,
+        SelectDialogComponent,
+        AutocompleteDialogComponent,
+    ]
 })
 export class FsSelectionModule {}
