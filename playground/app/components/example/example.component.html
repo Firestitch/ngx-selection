@@ -5,4 +5,5 @@
 <div class="actions" *ngIf="selectionRef">
   <button mat-raised-button color="primary" (click)="changeActions()">Change Actions</button>
   <button mat-raised-button color="warn" (click)="resetActions()">Reset To Default</button>
+  <button mat-raised-button color="accent" (click)="switchDisable()">{{disabled ? 'Enable' : 'Disable'}}</button>
 </div>

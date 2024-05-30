@@ -22,7 +22,7 @@
           fsSelectButton
           [color]="Color.Primary"
           [placeholder]="selectorPlaceholder">
-        <mat-option *ngFor="let action of actions" [value]="action">
+        <mat-option *ngFor="let action of actions" [value]="action" [disabled]="action.disabled">
           {{ action.label }}
         </mat-option>
       </mat-select>

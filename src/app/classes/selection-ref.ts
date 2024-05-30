@@ -1,13 +1,15 @@
 import { MatDialogRef } from '@angular/material/dialog';
+
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { SelectionConfig } from './selection-config';
 import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 import {
   FsSelectionActionSelected,
-  FsSelectionDialogConfig, FsSelectionDialogConfigAction
+  FsSelectionDialogConfig, FsSelectionDialogConfigAction,
 } from '../interfaces/selection-dialog-config.interface';
+
+import { SelectionConfig } from './selection-config';
 
 
 export class SelectionRef {
@@ -111,6 +113,12 @@ export class SelectionRef {
 
   public updateActions(actions: FsSelectionDialogConfigAction[]) {
     this._config.actions = actions;
+  }
+
+  public actionDisabledSwitch(actionName: string, disabled: boolean) {
+    this._config.actions
+      .find((item) => item.name === actionName)
+      .disabled = disabled;
   }
 
   public resetActions() {

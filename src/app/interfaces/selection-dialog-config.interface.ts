@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import { SelectionActionType } from '../classes/selection-action-type.enum';
 
 export interface FsSelectionDialogConfig {
@@ -17,7 +18,8 @@ export interface FsSelectionDialogConfigAction {
   name?: string;
   label?: string;
   placeholder?: string;
-  type?: SelectionActionType,
+  type?: SelectionActionType;
+  disabled?: boolean;
   values?: FsSelectionDialogConfigValuesFn | ReturnType<FsSelectionDialogConfigValuesFn>;
 }
 

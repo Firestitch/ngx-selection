@@ -4,8 +4,9 @@ import {
   Component,
   Inject,
   OnDestroy,
-  OnInit
+  OnInit,
 } from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Color } from '@firestitch/selectbutton';
@@ -13,11 +14,11 @@ import { Color } from '@firestitch/selectbutton';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { SelectionRef } from '../../classes/selection-ref';
-import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
-import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
+import { SelectionRef } from '../../classes/selection-ref';
+import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { AutocompleteDialogComponent } from '../autocomplete-dialog/autocomplete-dialog.component';
+import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
 
 
 @Component({
@@ -43,8 +44,17 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public selectorPlaceholder = 'Actions';
   public Color = Color;
 
+  public set selectedCount(value) {
+    this._selectedCount = value;
+    this.selectionIsEmpty = this._selectedCount === 0;
+  }
+
+  public get selectedCount() {
+    return this._selectedCount;
+  }
+
   private readonly _selectionRef: SelectionRef;
-  private readonly  _destroy$ = new Subject<void>();
+  private readonly _destroy$ = new Subject<void>();
 
   private _selectedCount = 0;
 
@@ -55,15 +65,6 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
     private _cdRef: ChangeDetectorRef,
   ) {
     this._selectionRef = this.data.selectionRef;
-  }
-
-  set selectedCount(value) {
-    this._selectedCount = value;
-    this.selectionIsEmpty = this._selectedCount === 0;
-  }
-
-  get selectedCount() {
-    return this._selectedCount;
   }
 
   public ngOnInit(): void {
@@ -80,7 +81,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
       value: value,
       name: name,
       all: this.allSelected,
-      action: action
+      action: action,
     });
   }
 
@@ -97,12 +98,23 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public selectAction(action) {
     this.selectedAction = action;
 
-    if (action.type === SelectionActionType.Action) {
-      this.actionClick(action, action.value, '');
-    } else if (action.type === SelectionActionType.Select) {
-      this._openSelectDialog(action);
-    } else if (action.type === SelectionActionType.Autocomplete) {
-      this._openAutocompleteDialog(action);
+    switch (action.type) {
+      case SelectionActionType.Action: {
+        this.actionClick(action, action.value, '');
+
+        break;
+      }
+      case SelectionActionType.Select: {
+        this._openSelectDialog(action);
+
+        break;
+      }
+      case SelectionActionType.Autocomplete: {
+        this._openAutocompleteDialog(action);
+
+        break;
+      }
+      // No default
     }
 
     // Set timeout is very important feature here, because ng material value won't be updated without timeout
@@ -127,7 +139,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
           this.actionClick(action, response.value, response.name);
           this._cdRef.markForCheck();
         }
-      })
+      });
   }
 
   private _openAutocompleteDialog(action: FsSelectionDialogConfigAction) {
@@ -145,7 +157,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
           this.actionClick(action, response.value, response.name);
           this._cdRef.markForCheck();
         }
-      })
+      });
   }
 
   private _listenConfigChanges() {
@@ -154,6 +166,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((changes) => {
+        console.log(changes);
         this.allCount = changes.allCount;
         this.selectedCount = changes.selectedCount;
         this.actions = changes.actions;
@@ -161,7 +174,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
         const countOfActions = this.actions.length;
 
-        if (countOfActions === 0 ) {
+        if (countOfActions === 0) {
           this.selectorPlaceholder = 'No Actions Available';
           this.noActionsAvailable = true;
           this.singleActionMode = false;

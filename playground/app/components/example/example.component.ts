@@ -1,14 +1,16 @@
-import { map, takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy } from '@angular/core';
+
 import { FsMessage } from '@firestitch/message';
 import {
+  FsSelectionActionSelected,
   FsSelectionDialogConfig,
   SelectionActionType,
   SelectionDialog,
   SelectionRef,
-  FsSelectionActionSelected
 } from '@firestitch/selection';
+
 import { Subject, of } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -16,12 +18,14 @@ import { Subject, of } from 'rxjs';
   templateUrl: 'example.component.html',
   styleUrls: [
     './example.component.scss',
-  ]
+  ],
 })
 export class ExampleComponent implements OnDestroy {
 
   public selected: any[] = [];
   public selectionRef: SelectionRef = null;
+  public disabled = false;
+  public config: FsSelectionDialogConfig;
 
   private _destroy$ = new Subject();
 
@@ -29,25 +33,25 @@ export class ExampleComponent implements OnDestroy {
     {
       name: 'Red',
       value: 'red',
-      image: './assets/red.png'
+      image: './assets/red.png',
     },
     {
       name: 'Blue',
       value: 'blue',
-      image: './assets/blue.png'
-    }
+      image: './assets/blue.png',
+    },
   ];
 
   items = [
-      { name: 'Item 1', id: '1' },
-      { name: 'Item 2', id: '2' },
-      { name: 'Item 3', id: '3' },
-      { name: 'Item 4', id: '4' }
-    ];
+    { name: 'Item 1', id: '1' },
+    { name: 'Item 2', id: '2' },
+    { name: 'Item 3', id: '3' },
+    { name: 'Item 4', id: '4' },
+  ];
 
   constructor(
     private selectionDialog: SelectionDialog,
-    private fsMessage: FsMessage
+    private fsMessage: FsMessage,
   ) { }
 
   public open() {
@@ -56,7 +60,7 @@ export class ExampleComponent implements OnDestroy {
       return;
     }
 
-    const config: FsSelectionDialogConfig = {
+    this.config = {
       allCount: this.items.length,
       selectedCount: this.selected.length,
       selectAll: true,
@@ -64,13 +68,15 @@ export class ExampleComponent implements OnDestroy {
         {
           type: SelectionActionType.Action,
           name: 'delete',
-          label: 'Delete'
+          label: 'Delete',
+          disabled: this.disabled,
         },
         {
           type: SelectionActionType.Autocomplete,
           label: 'Change Color',
           name: 'color',
           placeholder: 'Color',
+          disabled: this.disabled,
           values: (keyword) => {
             return of(this._data)
               .pipe(
@@ -80,33 +86,35 @@ export class ExampleComponent implements OnDestroy {
                   });
                 }),
               );
-          }
+          },
         },
         {
           type: SelectionActionType.Select,
           label: 'Change Hair Color',
-          name: 'color',
-          values: of(this._data)
+          name: 'hairColor',
+          disabled: this.disabled,
+          values: of(this._data),
         },
         {
           type: SelectionActionType.Select,
           label: 'Change Status To',
           name: 'status',
+          disabled: this.disabled,
           values: [
             {
               name: 'TODO',
-              value: '1'
+              value: '1',
             },
             {
               name: 'Done',
-              value: '2'
-            }
-          ]
+              value: '2',
+            },
+          ],
         },
       ],
     };
 
-    this.selectionRef = this.selectionDialog.open(config);
+    this.selectionRef = this.selectionDialog.open(this.config);
     this.subscribeToSelectionEvents();
   }
 
@@ -121,7 +129,7 @@ export class ExampleComponent implements OnDestroy {
       {
         type: SelectionActionType.Action,
         name: 'delete',
-        label: 'My changed Action'
+        label: 'My changed Action',
       },
       {
         type: SelectionActionType.Select,
@@ -130,15 +138,23 @@ export class ExampleComponent implements OnDestroy {
         values: of([
           {
             name: 'Red',
-            value: 'red'
+            value: 'red',
           },
           {
             name: 'Blue',
-            value: 'blue'
-          }
-        ])
+            value: 'blue',
+          },
+        ]),
       },
-    ])
+    ]);
+  }
+
+  public switchDisable(): void {
+    this.disabled = !this.disabled;
+    this.config.actions
+      .forEach((action) => {
+        this.selectionRef.actionDisabledSwitch(action.name, this.disabled);
+      });
   }
 
   public resetActions() {
@@ -147,46 +163,46 @@ export class ExampleComponent implements OnDestroy {
 
   private subscribeToSelectionEvents() {
     this.selectionRef
-    .actionSelected$()
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((result: FsSelectionActionSelected) => {
-      console.log('Action Selected ', result);
-      let message = 'Selected all';
+      .actionSelected$()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((result: FsSelectionActionSelected) => {
+        console.log('Action Selected ', result);
+        let message = 'Selected all';
 
-      if (!result.all) {
-        message = `Selected ${this.selected.length}`;
-      }
+        if (!result.all) {
+          message = `Selected ${this.selected.length}`;
+        }
 
-      message = `${message} for selection processing ${(result.name)} (${result.value})`;
+        message = `${message} for selection processing ${(result.name)} (${result.value})`;
 
-      this.fsMessage.success(message);
-      this.selectionRef.cancel();
-    });
+        this.fsMessage.success(message);
+        this.selectionRef.cancel();
+      });
 
     this.selectionRef
-    .allSelected$()
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((all) => {
-      console.log('All Selected ', all);
-      this.selected.splice(0, this.selected.length);
-      if (all) {
-        this.selected.push(...this.items
-          .map((item) => item.id));
-      } else {
+      .allSelected$()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((all) => {
+        console.log('All Selected ', all);
         this.selected.splice(0, this.selected.length);
-      }
-    });
+        if (all) {
+          this.selected.push(...this.items
+            .map((item) => item.id));
+        } else {
+          this.selected.splice(0, this.selected.length);
+        }
+      });
 
     this.selectionRef.cancelled$().subscribe(() => {
       this.selected.splice(0, this.selected.length);
       this.selectionRef = null;
     });
   }
-  
+
   public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();

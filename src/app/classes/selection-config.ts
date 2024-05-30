@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es';
 
 import {
   FsSelectionDialogConfig,
-  FsSelectionDialogConfigAction
+  FsSelectionDialogConfigAction,
 } from '../interfaces/selection-dialog-config.interface';
 
 
@@ -31,7 +31,7 @@ export class SelectionConfig {
       this._allCount$,
       this._selectedAllStatus$,
       this._selectAll$,
-      this._actions$
+      this._actions$,
     ).pipe(
       debounceTime(0),
       map(([selectedCount, allCount, selectedAllStatus, selectAll, actions]) => {
@@ -40,10 +40,10 @@ export class SelectionConfig {
           allCount,
           selectedAllStatus,
           selectAll,
-          actions
-        }
-      })
-    )
+          actions,
+        };
+      }),
+    );
   }
 
   get actions() {
