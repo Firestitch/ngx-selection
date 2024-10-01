@@ -30,7 +30,12 @@
             "allowedCommonJsDependencies": [
               "highlight.js",
               "date-fns-tz"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -135,8 +140,8 @@
           "options": {
             "tsConfig": "src/tsconfig.lib.json",
             "project": "src/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "src/tsconfig.lib.prod.json"
             }
@@ -152,6 +157,5 @@
         }
       }
     }
-  },
-  "defaultProject": "fs-package-app"
+  }
 }
