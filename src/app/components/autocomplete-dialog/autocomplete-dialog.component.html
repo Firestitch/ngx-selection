@@ -12,7 +12,7 @@
       name="selected">
       <ng-template fsAutocompleteTemplate let-data="data">
         <div class="row">
-          <fs-badge size="30" [image]="data.image" *ngIf="data.image"></fs-badge>
+          <fs-badge [size]="30" [image]="data.image" *ngIf="data.image"></fs-badge>
           <span>{{ data.name }}</span>
         </div>
       </ng-template>
