@@ -166,7 +166,6 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((changes) => {
-        console.log(changes);
         this.allCount = changes.allCount;
         this.selectedCount = changes.selectedCount;
         this.actions = changes.actions;
