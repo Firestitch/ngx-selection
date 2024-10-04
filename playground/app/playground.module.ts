@@ -34,7 +34,7 @@ const routes: Routes = [
         ToastrModule.forRoot(),
         FsMessageModule.forRoot(),
         FsCheckboxGroupModule,
-        RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+        RouterModule.forRoot(routes, {}),
     ],
     declarations: [
         AppComponent,
