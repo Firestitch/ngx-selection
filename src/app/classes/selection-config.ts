@@ -51,7 +51,7 @@ export class SelectionConfig {
   }
 
   set actions(value: FsSelectionDialogConfigAction[]) {
-    this._actions$.next(value);
+    this._actions$.next(null)(value);
   }
 
   get selectedCount() {
@@ -59,7 +59,7 @@ export class SelectionConfig {
   }
 
   set selectedCount(value: number) {
-    this._selectedCount$.next(value);
+    this._selectedCount$.next(null)(value);
   }
 
   get allCount() {
@@ -67,7 +67,7 @@ export class SelectionConfig {
   }
 
   set allCount(value: number) {
-    this._allCount$.next(value);
+    this._allCount$.next(null)(value);
   }
 
   get selectedAllStatus() {
@@ -75,7 +75,7 @@ export class SelectionConfig {
   }
 
   set selectedAllStatus(value: boolean) {
-    this._selectedAllStatus$.next(value);
+    this._selectedAllStatus$.next(null)(value);
   }
 
   get selectAll() {
@@ -83,7 +83,7 @@ export class SelectionConfig {
   }
 
   set selectAll(value: boolean) {
-    this._selectAll$.next(value);
+    this._selectAll$.next(null)(value);
   }
 
   public resetActions() {
@@ -91,7 +91,7 @@ export class SelectionConfig {
   }
 
   public destroy() {
-    this._destroy$.next();
+    this._destroy$.next(null)();
     this._destroy$.complete();
   }
 

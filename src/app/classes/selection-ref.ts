@@ -59,7 +59,7 @@ export class SelectionRef {
    * @param data
    */
   public action(data: FsSelectionActionSelected) {
-    return this._actionSelected$.next(data);
+    return this._actionSelected$.next(null)(data);
   }
 
   /**
@@ -67,7 +67,7 @@ export class SelectionRef {
    * @param data
    */
   public selectAll(data: boolean) {
-    return this._allSelect$.next(data);
+    return this._allSelect$.next(null)(data);
   }
 
   /**
@@ -76,7 +76,7 @@ export class SelectionRef {
   public cancel() {
     this.close();
 
-    return this._cancel$.next();
+    return this._cancel$.next(null)();
   }
 
 
@@ -129,7 +129,7 @@ export class SelectionRef {
    * Destroy ref
    */
   public destroy() {
-    this.destroy$.next();
+    this.destroy$.next(null)();
     this.destroy$.complete();
 
     this._config.destroy();
