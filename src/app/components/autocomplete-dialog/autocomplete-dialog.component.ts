@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { FsAutocompleteComponent } from '@firestitch/autocomplete';
@@ -59,7 +60,7 @@ export class AutocompleteDialogComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this._destroy$.next(null)();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 

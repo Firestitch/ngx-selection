@@ -48,8 +48,8 @@ export class ExampleComponent implements OnDestroy {
   ];
 
   constructor(
-    private selectionDialog: SelectionDialog,
-    private fsMessage: FsMessage,
+    private _selectionDialog: SelectionDialog,
+    private _message: FsMessage,
   ) { }
 
   public open() {
@@ -112,8 +112,8 @@ export class ExampleComponent implements OnDestroy {
       ],
     };
 
-    this.selectionRef = this.selectionDialog.open(this.config);
-    this.subscribeToSelectionEvents();
+    this.selectionRef = this._selectionDialog.open(this.config);
+    this._subscribeToSelectionEvents();
   }
 
   public selectionChange() {
@@ -159,7 +159,12 @@ export class ExampleComponent implements OnDestroy {
     this.selectionRef.resetActions();
   }
 
-  private subscribeToSelectionEvents() {
+  public ngOnDestroy(): void {
+    this._destroy$.next(null);
+    this._destroy$.complete();
+  }
+
+  private _subscribeToSelectionEvents() {
     this.selectionRef
       .actionSelected$()
       .pipe(
@@ -175,7 +180,7 @@ export class ExampleComponent implements OnDestroy {
 
         message = `${message} for selection processing ${(result.name)} (${result.value})`;
 
-        this.fsMessage.success(message);
+        this._message.success(message);
         this.selectionRef.cancel();
       });
 
@@ -199,11 +204,6 @@ export class ExampleComponent implements OnDestroy {
       this.selected.splice(0, this.selected.length);
       this.selectionRef = null;
     });
-  }
-
-  public ngOnDestroy(): void {
-    this._destroy$.next(null)();
-    this._destroy$.complete();
   }
 
 }

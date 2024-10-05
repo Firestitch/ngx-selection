@@ -25,7 +25,7 @@ export class SelectionConfig {
     this._init(config);
   }
 
-  get changes$() {
+  public get changes$() {
     return combineLatest(
       this._selectedCount$,
       this._allCount$,
@@ -46,44 +46,44 @@ export class SelectionConfig {
     );
   }
 
-  get actions() {
+  public get actions() {
     return this._actions$.getValue();
   }
 
-  set actions(value: FsSelectionDialogConfigAction[]) {
-    this._actions$.next(null)(value);
+  public set actions(value: FsSelectionDialogConfigAction[]) {
+    this._actions$.next(value);
   }
 
-  get selectedCount() {
+  public get selectedCount() {
     return this._selectedCount$.getValue();
   }
 
-  set selectedCount(value: number) {
-    this._selectedCount$.next(null)(value);
+  public set selectedCount(value: number) {
+    this._selectedCount$.next(value);
   }
 
-  get allCount() {
+  public get allCount() {
     return this._allCount$.getValue();
   }
 
-  set allCount(value: number) {
-    this._allCount$.next(null)(value);
+  public set allCount(value: number) {
+    this._allCount$.next(value);
   }
 
-  get selectedAllStatus() {
+  public get selectedAllStatus() {
     return this._selectedAllStatus$.getValue();
   }
 
-  set selectedAllStatus(value: boolean) {
-    this._selectedAllStatus$.next(null)(value);
+  public set selectedAllStatus(value: boolean) {
+    this._selectedAllStatus$.next(value);
   }
 
-  get selectAll() {
+  public get selectAll() {
     return this._selectAll$.getValue();
   }
 
-  set selectAll(value: boolean) {
-    this._selectAll$.next(null)(value);
+  public set selectAll(value: boolean) {
+    this._selectAll$.next(value);
   }
 
   public resetActions() {
@@ -91,7 +91,7 @@ export class SelectionConfig {
   }
 
   public destroy() {
-    this._destroy$.next(null)();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 
