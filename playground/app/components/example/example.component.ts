@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 
 import { FsMessage } from '@firestitch/message';
 import {
@@ -15,10 +15,9 @@ import { map, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'example',
-  templateUrl: 'example.component.html',
-  styleUrls: [
-    './example.component.scss',
-  ],
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleComponent implements OnDestroy {
 
@@ -27,8 +26,14 @@ export class ExampleComponent implements OnDestroy {
   public disabled = false;
   public config: FsSelectionDialogConfig;
 
-  private _destroy$ = new Subject();
+  public items = [
+    { name: 'Item 1', id: '1' },
+    { name: 'Item 2', id: '2' },
+    { name: 'Item 3', id: '3' },
+    { name: 'Item 4', id: '4' },
+  ];
 
+  private _destroy$ = new Subject();
   private _data = [
     {
       name: 'Red',
@@ -40,13 +45,6 @@ export class ExampleComponent implements OnDestroy {
       value: 'blue',
       image: './assets/blue.png',
     },
-  ];
-
-  items = [
-    { name: 'Item 1', id: '1' },
-    { name: 'Item 2', id: '2' },
-    { name: 'Item 3', id: '3' },
-    { name: 'Item 4', id: '4' },
   ];
 
   constructor(

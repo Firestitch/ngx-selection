@@ -4,19 +4,21 @@ import {
   Component,
   Inject,
   OnDestroy,
-  OnInit
+  OnInit,
 } from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { isArray, isObject } from 'lodash-es';
+
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { isArray, isObject } from 'lodash-es';
+
 import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-dialog-config.interface';
-import { isFunction } from 'rxjs/internal-compatibility';
 
 @Component({
-  templateUrl: 'select-dialog.component.html',
-  styleUrls: ['select-dialog.component.scss'],
+  templateUrl: './select-dialog.component.html',
+  styleUrls: ['./select-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectDialogComponent implements OnInit, OnDestroy {
@@ -54,15 +56,15 @@ export class SelectDialogComponent implements OnInit, OnDestroy {
   private _initValues(values) {
     if (isArray(values)) {
       this.setOptions(values);
-    } else if (isFunction(values)) {
+    } else if (typeof values === 'function') {
       this._initValues(values());
     } else if (isObject(values)) {
       this.data.values
         .pipe(
           take(1),
-          takeUntil(this._destroy$)
+          takeUntil(this._destroy$),
         )
-        .subscribe(options => {
+        .subscribe((options) => {
           this.setOptions(options);
           this._cdRef.markForCheck();
         });
