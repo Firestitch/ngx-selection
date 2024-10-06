@@ -6,5 +6,5 @@
 @import '../src/app/styles.scss';
 @include mat.core();
 
-@include fs-selection(mat.$blue-palette);
+@include fs-selection(mat.$m2-blue-palette);
 @include fs-form($app-theme);

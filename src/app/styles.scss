@@ -2,7 +2,7 @@
 
 @mixin fs-selection($theme) {
 
-  $primary: mat.define-palette($theme);
+  $primary: mat.m2-define-palette($theme);
 
   .fs-selection-pane {
 
@@ -66,7 +66,7 @@
 
     .selected-badge {
       margin-right: 3px;
-      background: mat.get-color-from-palette($primary);
+      background: mat.m2-get-color-from-palette($primary);
       color: #fff;
       display: inline-block;
       width: 28px;
