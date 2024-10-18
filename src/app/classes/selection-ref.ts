@@ -15,15 +15,20 @@ import { SelectionConfig } from './selection-config';
 export class SelectionRef {
 
   public dialogRef: MatDialogRef<SelectionDialogComponent>;
-  public destroy$ = new Subject<void>();
+  
 
   private readonly _config: SelectionConfig;
   private _actionSelected$ = new Subject<FsSelectionActionSelected>();
   private _allSelect$ = new Subject<boolean>();
   private _cancel$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
 
   constructor(config: FsSelectionDialogConfig) {
     this._config = new SelectionConfig(config);
+  }
+  
+  public get destroy$(): Observable<void> {
+    return this._destroy$.asObservable();
   }
 
   /**
@@ -37,21 +42,21 @@ export class SelectionRef {
    * Subscribe when action selected
    */
   public actionSelected$(): Observable<FsSelectionActionSelected> {
-    return this._actionSelected$.pipe(takeUntil(this.destroy$));
+    return this._actionSelected$.pipe(takeUntil(this._destroy$));
   }
 
   /**
    * Subscribe when "Select All" is selected
    */
   public allSelected$(): Observable<boolean> {
-    return this._allSelect$.pipe(takeUntil(this.destroy$));
+    return this._allSelect$.pipe(takeUntil(this._destroy$));
   }
 
   /**
    * Subscribe when dialog ref was closed
    */
   public cancelled$(): Observable<void> {
-    return this._cancel$.pipe(takeUntil(this.destroy$));
+    return this._cancel$.pipe(takeUntil(this._destroy$));
   }
 
   /**
@@ -129,9 +134,8 @@ export class SelectionRef {
    * Destroy ref
    */
   public destroy() {
-    this.destroy$.next(null);
-    this.destroy$.complete();
-
+    this._destroy$.next(null);
+    this._destroy$.complete();
     this._config.destroy();
   }
 }

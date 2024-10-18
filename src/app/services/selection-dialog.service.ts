@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+
 import { Overlay } from '@angular/cdk/overlay';
+import { MatDialog } from '@angular/material/dialog';
 
 import { takeUntil } from 'rxjs/operators';
 
-import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 import { SelectionRef } from '../classes/selection-ref';
+import { SelectionDialogComponent } from '../components/selection-dialog/selection-dialog.component';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { SelectionRef } from '../classes/selection-ref';
 })
 export class SelectionDialog {
 
-  private selectionRef: SelectionRef = null;
+  private _selectionRef: SelectionRef = null;
 
   constructor(
     public dialog: MatDialog,
@@ -22,11 +23,11 @@ export class SelectionDialog {
 
   public open(config): SelectionRef {
 
-    if (this.selectionRef) {
-      return this.selectionRef;
+    if (this._selectionRef) {
+      return this._selectionRef;
     }
 
-    this.selectionRef = new SelectionRef(config);
+    this._selectionRef = new SelectionRef(config);
 
     document.body.classList.add('selection-dialog-opened');
 
@@ -36,29 +37,21 @@ export class SelectionDialog {
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
       hasBackdrop: false,
       position: { left: '0px', bottom: '0px', right: '0px' },
-      data: { selectionRef: this.selectionRef }
+      data: { selectionRef: this._selectionRef },
     });
 
-    this.selectionRef.dialogRef = dialogRef;
-
-    dialogRef.beforeClosed()
-      .pipe(
-        takeUntil(this.selectionRef.destroy$)
-      )
-      .subscribe(result => {
-        this.selectionRef.cancel();
-      });
+    this._selectionRef.dialogRef = dialogRef;
 
     dialogRef.afterClosed()
       .pipe(
-        takeUntil(this.selectionRef.destroy$)
+        takeUntil(this._selectionRef.destroy$),
       )
-      .subscribe((result) => {
-        this.selectionRef.destroy();
-        this.selectionRef = null;
+      .subscribe(() => {
+        this._selectionRef.destroy();
+        this._selectionRef = null;
         document.body.classList.remove('selection-dialog-opened');
       });
 
-    return this.selectionRef;
+    return this._selectionRef;
   }
 }

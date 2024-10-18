@@ -1,5 +1,4 @@
-<div mat-dialog-content class="selection-content">
-
+<div class="container">
   <div class="selected">
       <span>
         {{ selectedCount }} <ng-container *ngIf="allCount">of {{ allCount }}</ng-container> Selected
@@ -12,14 +11,14 @@
       Select All {{ allCount }}
     </a>
   </div>
-
   <div class="actions">
     <ng-container *ngIf="!singleActionMode; else singleAction">
       <mat-select 
           (selectionChange)="selectAction($event.value)"
-          [value]="selectedAction"
           [disabled]="selectionIsEmpty || noActionsAvailable"
           fsSelectButton
+          [(ngModel)]="selectedAction"
+          [deselectOnChange]="false"
           [color]="Color.Primary"
           [placeholder]="selectorPlaceholder">
         <mat-option *ngFor="let action of actions" [value]="action" [disabled]="action.disabled">
@@ -27,17 +26,17 @@
         </mat-option>
       </mat-select>
     </ng-container>
-
+  
     <ng-template #singleAction>
-      <button mat-raised-button
-              (click)="selectAction(actions[0])"
-              [disabled]="selectionIsEmpty || noActionsAvailable"
-              color="primary"
-      > {{ actions[0].label }}
+      <button 
+          mat-raised-button
+          (click)="selectAction(actions[0])"
+          [disabled]="selectionIsEmpty || noActionsAvailable"
+          color="primary"> 
+        {{ actions[0].label }}
       </button>
     </ng-template>
-
+  
     <button mat-button (click)="cancelClick()" class="action cancel-btn">Cancel</button>
   </div>
-
-</div>
+</div>  

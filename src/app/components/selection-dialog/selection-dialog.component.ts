@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Color } from '@firestitch/selectbutton';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
 import { SelectionRef } from '../../classes/selection-ref';
@@ -22,10 +22,8 @@ import { SelectDialogComponent } from '../select-dialog/select-dialog.component'
 
 
 @Component({
-  templateUrl: 'selection-dialog.component.html',
-  styleUrls: [
-    './selection-dialog.component.scss',
-  ],
+  templateUrl: './selection-dialog.component.html',
+  styleUrls: ['./selection-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionDialogComponent implements OnInit, OnDestroy {
@@ -33,6 +31,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   public selectAllEnabled = false;
   public allSelected = false;
   public allCount = 0;
+  public action;
 
   public actions: FsSelectionDialogConfigAction[] = [];
 
@@ -114,14 +113,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
         break;
       }
-      // No default
     }
-
-    // Set timeout is very important feature here, because ng material value won't be updated without timeout
-    setTimeout(() => {
-      this.selectedAction = null;
-      this._cdRef.markForCheck();
-    }, 300);
   }
 
   private _openSelectDialog(action: FsSelectionDialogConfigAction) {
@@ -132,6 +124,10 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
+        finalize(() => {
+          this.selectedAction = null;
+          this._cdRef.markForCheck();
+        }),
         takeUntil(this._destroy$),
       )
       .subscribe((response) => {

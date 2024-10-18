@@ -55,7 +55,7 @@ export class SelectDialogComponent implements OnInit, OnDestroy {
 
   private _initValues(values) {
     if (isArray(values)) {
-      this.setOptions(values);
+      this._setOptions(values);
     } else if (typeof values === 'function') {
       this._initValues(values());
     } else if (isObject(values)) {
@@ -65,12 +65,13 @@ export class SelectDialogComponent implements OnInit, OnDestroy {
           takeUntil(this._destroy$),
         )
         .subscribe((options) => {
-          this.setOptions(options);
+          this._setOptions(options);
           this._cdRef.markForCheck();
         });
     }
   }
-  private setOptions(options) {
+
+  private _setOptions(options) {
     this.options = options;
 
     if (this.options.length) {

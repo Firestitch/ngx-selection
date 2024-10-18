@@ -1,16 +1,64 @@
-.mat-select {
-  max-width: 230px !important;
 
-  &.mat-select-disabled {
-    opacity: 0.4;
+@media all and (max-width: 400px){
+  .mat-dialog-content {
+    padding: 10px 5px !important;
+    margin: 0 !important;
   }
 }
 
+.mat-dialog-container {
+  padding: 10px;
+  border-radius: 0;
+}
 
-:host {
-  ::ng-deep {
-    .mat-select-value {
-      max-width: unset;
+.container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+
+  mat-select {
+    width: 200px;
+  }
+
+  .selected {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .select-all-link {
+      cursor: pointer;
+      font-size: 95%;
     }
+  }
+}
+
+.actions {
+  display: flex;
+  margin-left: 20px;
+
+  .mat-select {
+    width: auto;
+  }
+
+  @media only screen and (max-width: 400px) {
+    .cancel-btn {
+      padding: 0;
+    }
+  }
+}
+
+.action {
+  margin-left: 15px;
+}
+
+::ng-deep {
+  .selection-dialog-opened {
+    padding-bottom: 70px;
+    box-sizing: border-box;
+  }
+
+  .fs-selection-pane {
+    max-width: 100% !important;
   }
 }

@@ -17,8 +17,8 @@ import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-d
 
 
 @Component({
-  templateUrl: 'autocomplete-dialog.component.html',
-  styleUrls: ['autocomplete-dialog.component.scss'],
+  templateUrl: './autocomplete-dialog.component.html',
+  styleUrls: ['./autocomplete-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteDialogComponent implements OnInit, OnDestroy {
@@ -36,7 +36,6 @@ export class AutocompleteDialogComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<AutocompleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    // private _cdRef: ChangeDetectorRef,
   ) { }
 
   public ngOnInit() {
