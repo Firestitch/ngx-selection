@@ -64,12 +64,6 @@ export class ExampleComponent implements OnDestroy {
       selectAll: true,
       actions: [
         {
-          type: SelectionActionType.Action,
-          name: 'delete',
-          label: 'Delete',
-          disabled: this.disabled,
-        },
-        {
           type: SelectionActionType.Autocomplete,
           label: 'Change Color',
           name: 'color',
@@ -108,6 +102,18 @@ export class ExampleComponent implements OnDestroy {
               value: '2',
             },
           ],
+        },
+        {
+          type: SelectionActionType.Action,
+          name: 'delete',
+          label: 'Delete',
+          disabled: this.disabled,
+        },
+        {
+          type: SelectionActionType.Action,
+          name: 'long',
+          label: 'A very long action label to test the layout',
+          disabled: this.disabled,
         },
       ],
     };
