@@ -15,18 +15,17 @@ import { SelectionConfig } from './selection-config';
 export class SelectionRef {
 
   public dialogRef: MatDialogRef<SelectionDialogComponent>;
-  
+
 
   private readonly _config: SelectionConfig;
   private _actionSelected$ = new Subject<FsSelectionActionSelected>();
   private _allSelect$ = new Subject<boolean>();
-  private _cancel$ = new Subject<void>();
   private _destroy$ = new Subject<void>();
 
   constructor(config: FsSelectionDialogConfig) {
     this._config = new SelectionConfig(config);
   }
-  
+
   public get destroy$(): Observable<void> {
     return this._destroy$.asObservable();
   }
@@ -53,13 +52,6 @@ export class SelectionRef {
   }
 
   /**
-   * Subscribe when dialog ref was closed
-   */
-  public cancelled$(): Observable<void> {
-    return this._cancel$.pipe(takeUntil(this._destroy$));
-  }
-
-  /**
    * Share event when action was clicked
    * @param data
    */
@@ -74,14 +66,6 @@ export class SelectionRef {
   public selectAll(data: boolean) {
     return this._allSelect$.next(data);
   }
-
-  /**
-   * Share event when dialog ref was canceled
-   */
-  public cancel() {
-    return this._cancel$.next(null);
-  }
-
 
   /**
    * Close dialog ref

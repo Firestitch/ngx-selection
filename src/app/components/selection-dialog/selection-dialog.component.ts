@@ -91,7 +91,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   }
 
   public cancelClick(): void {
-    this._selectionRef.cancel();
+    this._selectionRef.close();
   }
 
   public selectAction(action) {

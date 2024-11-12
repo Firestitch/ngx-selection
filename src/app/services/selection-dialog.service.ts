@@ -42,14 +42,6 @@ export class SelectionDialog {
 
     this._selectionRef.dialogRef = dialogRef;
 
-    dialogRef.beforeClosed()
-      .pipe(
-        takeUntil(this._selectionRef.destroy$)
-      )
-      .subscribe(result => {
-        this._selectionRef.cancel();
-      });
-
     dialogRef.afterClosed()
       .pipe(
         takeUntil(this._selectionRef.destroy$),
