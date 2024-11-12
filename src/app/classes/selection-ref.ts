@@ -79,8 +79,6 @@ export class SelectionRef {
    * Share event when dialog ref was canceled
    */
   public cancel() {
-    this.close();
-
     return this._cancel$.next(null);
   }
 
