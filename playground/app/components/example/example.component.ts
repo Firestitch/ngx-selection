@@ -187,7 +187,7 @@ export class ExampleComponent implements OnDestroy {
         message = `${message} for selection processing ${(result.name)} (${result.value})`;
 
         this._message.success(message);
-        this.selectionRef.cancel();
+        this.selectionRef.close();
       });
 
     this.selectionRef
@@ -206,7 +206,7 @@ export class ExampleComponent implements OnDestroy {
         }
       });
 
-    this.selectionRef.cancelled$().subscribe(() => {
+    this.selectionRef.destroy$.subscribe(() => {
       this.selected.splice(0, this.selected.length);
       this.selectionRef = null;
     });
