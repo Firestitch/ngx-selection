@@ -1,9 +1,34 @@
-<fs-checkbox-group [(ngModel)]="selected" (change)="selectionChange()" name="selected" label="Checkboxes">
-    <mat-checkbox (click)="open()" *ngFor="let item of items" [value]="item.id">{{ item.name }}</mat-checkbox>
+<fs-checkbox-group
+    [(ngModel)]="selected"
+    (change)="selectionChange()"
+    name="selected"
+    label="Checkboxes">
+  <mat-checkbox
+      (click)="open()"
+      *ngFor="let item of items"
+      [value]="item.id">
+    {{ item.name }}
+  </mat-checkbox>
 </fs-checkbox-group>
-
-<div class="actions" *ngIf="selectionRef">
-  <button mat-raised-button color="primary" (click)="changeActions()">Change Actions</button>
-  <button mat-raised-button color="warn" (click)="resetActions()">Reset To Default</button>
-  <button mat-raised-button color="accent" (click)="switchDisable()">{{disabled ? 'Enable' : 'Disable'}}</button>
+<div
+    class="actions"
+    *ngIf="selectionRef">
+  <button
+      mat-flat-button
+      color="primary"
+      (click)="changeActions()">
+    Change Actions
+  </button>
+  <button
+      mat-flat-button
+      color="warn"
+      (click)="resetActions()">
+    Reset To Default
+  </button>
+  <button
+      mat-flat-button
+      color="accent"
+      (click)="switchDisable()">
+    {{ disabled ? 'Enable' : 'Disable' }}
+  </button>
 </div>
