@@ -20,6 +20,8 @@
           (selectionChange)="selectAction($event.value)"
           [disabled]="selectionIsEmpty || noActionsAvailable"
           fsSelectButton
+          color="primary"
+          buttonType="flat"
           [(ngModel)]="selectedAction"
           [deselectOnChange]="false"
           [placeholder]="selectorPlaceholder">
