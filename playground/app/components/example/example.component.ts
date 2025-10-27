@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject } from '@angular/core';
 
 import { FsMessage } from '@firestitch/message';
 import {
@@ -31,6 +31,9 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class ExampleComponent implements OnDestroy {
+  private _selectionDialog = inject(SelectionDialog);
+  private _message = inject(FsMessage);
+
 
   public selected: any[] = [];
   public selectionRef: SelectionRef = null;
@@ -57,11 +60,6 @@ export class ExampleComponent implements OnDestroy {
       image: './assets/blue.png',
     },
   ];
-
-  constructor(
-    private _selectionDialog: SelectionDialog,
-    private _message: FsMessage,
-  ) { }
 
   public open() {
 

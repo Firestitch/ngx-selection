@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -41,6 +34,11 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class SelectionDialogComponent implements OnInit, OnDestroy {
+  dialogRef = inject<MatDialogRef<SelectionDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private _dialog = inject(MatDialog);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   public selectAllEnabled = false;
   public allSelected = false;
@@ -71,12 +69,7 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
   private _selectedCount = 0;
 
-  constructor(
-    public dialogRef: MatDialogRef<SelectionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-    private _dialog: MatDialog,
-    private _cdRef: ChangeDetectorRef,
-  ) {
+  constructor() {
     this._selectionRef = this.data.selectionRef;
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Overlay } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,13 +13,11 @@ import { SelectionDialogComponent } from '../components/selection-dialog/selecti
   providedIn: 'root',
 })
 export class SelectionDialog {
+  dialog = inject(MatDialog);
+  overlay = inject(Overlay);
+
 
   private _selectionRef: SelectionRef = null;
-
-  constructor(
-    public dialog: MatDialog,
-    public overlay: Overlay,
-  ) {}
 
   public open(config): SelectionRef {
 

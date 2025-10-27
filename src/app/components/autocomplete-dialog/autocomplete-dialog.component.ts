@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 
@@ -39,6 +32,9 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class AutocompleteDialogComponent implements OnInit, OnDestroy {
+  dialogRef = inject<MatDialogRef<AutocompleteDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
 
   @ViewChild(FsAutocompleteComponent, { static: false })
   public autocomplete: FsAutocompleteComponent;
@@ -49,11 +45,6 @@ export class AutocompleteDialogComponent implements OnInit, OnDestroy {
   public placeholder: string = '';
 
   private _destroy$ = new Subject();
-
-  constructor(
-    public dialogRef: MatDialogRef<AutocompleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-  ) { }
 
   public ngOnInit() {
     this.label = this.data.label;

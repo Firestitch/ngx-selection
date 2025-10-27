@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 
@@ -42,17 +35,15 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class SelectDialogComponent implements OnInit, OnDestroy {
+  dialogRef = inject<MatDialogRef<SelectDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private _cdRef = inject(ChangeDetectorRef);
+
   public options: FsSelectionDialogConfigActionValue[] = [];
   public selectedOption: FsSelectionDialogConfigActionValue = null;
   public label = '';
 
   private _destroy$ = new Subject();
-
-  constructor(
-    public dialogRef: MatDialogRef<SelectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-    private _cdRef: ChangeDetectorRef,
-  ) {}
 
   public ngOnInit() {
     this.label = this.data.label;
