@@ -2,17 +2,19 @@
   <div mat-dialog-title>{{ label }}</div>
   <mat-dialog-content>
     <fs-autocomplete
-        [fetch]="fetch"
-        [displayWith]="displayWith"
-        [fetchOnFocus]="true"
-        [(ngModel)]="selected"
-        [required]="true"
-        [placeholder]="placeholder"
-        panelClass="fs-selection-autocomplete-panel"
-        name="selected">
+      [fetch]="fetch"
+      [displayWith]="displayWith"
+      [fetchOnFocus]="true"
+      [(ngModel)]="selected"
+      [required]="true"
+      [placeholder]="placeholder"
+      panelClass="fs-selection-autocomplete-panel"
+      name="selected">
       <ng-template fsAutocompleteTemplate let-data="data">
         <div class="row">
-          <fs-badge [size]="30" [image]="data.image" *ngIf="data.image"></fs-badge>
+          @if (data.image) {
+            <fs-badge [size]="30" [image]="data.image"></fs-badge>
+          }
           <span>{{ data.name }}</span>
         </div>
       </ng-template>

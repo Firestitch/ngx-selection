@@ -2,50 +2,51 @@
   <div class="selected">
     <span>
       {{ selectedCount }}
-      <ng-container *ngIf="allCount">
+      @if (allCount) {
         of {{ allCount }}
-      </ng-container>
+      }
       Selected
     </span>
-    <a
+    @if (selectAllEnabled && !allSelected) {
+      <a
         (click)="selectAllClick()"
-        *ngIf="selectAllEnabled && !allSelected"
         class="select-all-link">
-      Select All {{ allCount }}
-    </a>
+        Select All {{ allCount }}
+      </a>
+    }
   </div>
   <div class="actions">
-    <ng-container *ngIf="!singleActionMode; else singleAction">
+    @if (!singleActionMode) {
       <mat-select
-          (selectionChange)="selectAction($event.value)"
-          [disabled]="selectionIsEmpty || noActionsAvailable"
-          fsSelectButton
-          color="primary"
-          buttonType="flat"
-          [(ngModel)]="selectedAction"
-          [deselectOnChange]="false"
-          [placeholder]="selectorPlaceholder">
-        <mat-option
-            *ngFor="let action of actions"
+        (selectionChange)="selectAction($event.value)"
+        [disabled]="selectionIsEmpty || noActionsAvailable"
+        fsSelectButton
+        color="primary"
+        buttonType="flat"
+        [(ngModel)]="selectedAction"
+        [deselectOnChange]="false"
+        [placeholder]="selectorPlaceholder">
+        @for (action of actions; track action) {
+          <mat-option
             [value]="action"
             [disabled]="action.disabled">
-          {{ action.label }}
-        </mat-option>
+            {{ action.label }}
+          </mat-option>
+        }
       </mat-select>
-    </ng-container>
-    <ng-template #singleAction>
+    } @else {
       <button
-          mat-flat-button
-          (click)="selectAction(actions[0])"
-          [disabled]="selectionIsEmpty || noActionsAvailable"
-          color="primary">
+        mat-flat-button
+        (click)="selectAction(actions[0])"
+        [disabled]="selectionIsEmpty || noActionsAvailable"
+        color="primary">
         {{ actions[0].label }}
       </button>
-    </ng-template>
+    }
     <button
-        mat-button
-        (click)="cancelClick()"
-        class="action cancel-btn">
+      mat-button
+      (click)="cancelClick()"
+      class="action cancel-btn">
       Cancel
     </button>
   </div>
