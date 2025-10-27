@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -15,11 +15,31 @@ import { take, takeUntil } from 'rxjs/operators';
 import { isArray, isObject } from 'lodash-es';
 
 import { FsSelectionDialogConfigActionValue } from '../../interfaces/selection-dialog-config.interface';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  templateUrl: './select-dialog.component.html',
-  styleUrls: ['./select-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './select-dialog.component.html',
+    styleUrls: ['./select-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FormsModule,
+        FsFormModule,
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        MatFormField,
+        MatSelect,
+        MatOption,
+        MatDialogActions,
+        MatButton,
+    ],
 })
 export class SelectDialogComponent implements OnInit, OnDestroy {
   public options: FsSelectionDialogConfigActionValue[] = [];

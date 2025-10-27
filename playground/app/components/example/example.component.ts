@@ -11,13 +11,24 @@ import {
 
 import { Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
+import { FormsModule } from '@angular/forms';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
-  selector: 'example',
-  templateUrl: './example.component.html',
-  styleUrls: ['./example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'example',
+    templateUrl: './example.component.html',
+    styleUrls: ['./example.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsCheckboxGroupModule,
+        FormsModule,
+        MatCheckbox,
+        MatButton,
+    ],
 })
 export class ExampleComponent implements OnDestroy {
 

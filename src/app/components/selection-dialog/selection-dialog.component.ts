@@ -9,7 +9,7 @@ import {
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Color } from '@firestitch/selectbutton';
+import { Color, FsSelectButtonModule } from '@firestitch/selectbutton';
 
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
@@ -19,12 +19,26 @@ import { SelectionRef } from '../../classes/selection-ref';
 import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog-config.interface';
 import { AutocompleteDialogComponent } from '../autocomplete-dialog/autocomplete-dialog.component';
 import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
+import { MatSelect } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { MatOption } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
-  templateUrl: './selection-dialog.component.html',
-  styleUrls: ['./selection-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './selection-dialog.component.html',
+    styleUrls: ['./selection-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatSelect,
+        FsSelectButtonModule,
+        FormsModule,
+        FsFormModule,
+        MatOption,
+        MatButton,
+    ],
 })
 export class SelectionDialogComponent implements OnInit, OnDestroy {
 
