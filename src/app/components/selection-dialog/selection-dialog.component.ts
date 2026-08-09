@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Color, FsSelectButtonModule } from '@firestitch/selectbutton';
 
 import { Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { SelectionActionType } from '../../classes/selection-action-type.enum';
 import { SelectionRef } from '../../classes/selection-ref';
@@ -13,8 +13,6 @@ import { FsSelectionDialogConfigAction } from '../../interfaces/selection-dialog
 import { AutocompleteDialogComponent } from '../autocomplete-dialog/autocomplete-dialog.component';
 import { SelectDialogComponent } from '../select-dialog/select-dialog.component';
 import { MatSelect } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
-import { FsFormModule } from '@firestitch/form';
 import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
 
@@ -27,8 +25,6 @@ import { MatButton } from '@angular/material/button';
     imports: [
         MatSelect,
         FsSelectButtonModule,
-        FormsModule,
-        FsFormModule,
         MatOption,
         MatButton,
     ],
@@ -47,7 +43,6 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
   public actions: FsSelectionDialogConfigAction[] = [];
 
-  public selectedAction: FsSelectionDialogConfigAction = null;
   public selectionIsEmpty = true;
 
   public singleActionMode = false;
@@ -102,8 +97,6 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
   }
 
   public selectAction(action) {
-    this.selectedAction = action;
-
     switch (action.type) {
       case SelectionActionType.Action: {
         this.actionClick(action, action.value, '');
@@ -131,10 +124,6 @@ export class SelectionDialogComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-        finalize(() => {
-          this.selectedAction = null;
-          this._cdRef.markForCheck();
-        }),
         takeUntil(this._destroy$),
       )
       .subscribe((response) => {

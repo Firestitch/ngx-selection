@@ -23,8 +23,6 @@
         fsSelectButton
         color="primary"
         buttonType="flat"
-        [(ngModel)]="selectedAction"
-        [deselectOnChange]="false"
         [placeholder]="selectorPlaceholder">
         @for (action of actions; track action) {
           <mat-option
